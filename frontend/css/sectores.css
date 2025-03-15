@@ -1,0 +1,138 @@
+/* 📌 Importar fuentes */
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Roboto:wght@300;400;700&display=swap");
+
+/* 📌 Fondo con efecto limpio y moderno */
+body {
+  padding: 60px;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  color: white;
+}
+
+/* 📌 Contenedor principal con Glassmorphism refinado */
+#sectores-container {
+  justify-content: center;
+  width: 90%;
+  max-width: 1000px;
+  margin:auto;
+  padding: 2rem 6rem;
+  text-align: center;
+  backdrop-filter: blur(14px);
+  border-radius: 12px;
+}
+
+
+/* 📌 Título con efecto sutil */
+.title {
+  font-size: 1.9rem;
+  font-weight: 600;
+  text-align: center;
+  color: white;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 6px rgba(255, 255, 255, 0.2);
+}
+
+/* 📌 Contenedor de pestañas con efecto profesional */
+.tabs {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 10px;
+  gap: 15px;
+  backdrop-filter: blur(10px);
+  border-radius: 10px 10px 0 0;
+}
+
+/* 📌 Botones de pestañas elegantes */
+.tab-button {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 6px;
+  color: #e7e9f5;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(6px);
+}
+
+.tab-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.tab-button.active {
+  background: linear-gradient(to top left, #03517a, #012538);
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  transform: scale(1.08);
+}
+
+/* 📌 Contenido de cada sector con un Glassmorphism limpio */
+.tab-content {
+  display: none;
+  padding: 20px;
+  border-radius: 10px;
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease-in-out;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* 📌 Tarjetas de sectores con un diseño más pulcro */
+.sector-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* 📌 Botones de sectores con un estilo minimalista */
+.sector-link {
+  display: block;
+  padding: 14px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 10px;
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sector-link:hover {
+  transform: scale(1.05);
+}
+
+/* 📌 Diseño responsivo */
+@media (max-width: 768px) {
+  .tabs {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .tab-button {
+    width: 100%;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tab-content.active {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.separator {
+  width: 80%;
+  margin: 20px auto;
+  border: none;
+  height: 2px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.1), white, rgba(255, 255, 255, 0.1));
+  border-radius: 2px;
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sectores Productivos</title>
+    <link rel="stylesheet" href="css/sectores.css"> <!-- Estilos específicos -->
+    <!-- Font Awesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- 📌 Contenedor para cargar dinámicamente header, sidebar y chat -->
+        <div id="dynamic-loader-container"></div>
+
+
+        <!-- 📌 Contenido principal -->
+        <div id="sectores-container" class="mt-20 ml-60">
+            <h2 class="title">Sectores Productivos</h2>
+            <hr class="separator">
+            <div class="tabs">
+                <button class="tab-button active">Agroindustrial</button>
+                <button class="tab-button">Ganadero y Cárnico</button>
+                <button class="tab-button">Industrial</button>
+                <button class="tab-button">Energético</button>
+            </div>
+            <hr class="separator">
+            <!-- 📌 Contenido de cada sector -->
+            <div class="tab-content active">
+                <div class="sector-container">
+                    <a href="algodonera.html" class="sector-link">Algodonera - Textil</a>
+                    <a href="apicola.html" class="sector-link">Apícola</a>
+                    <a href="arroz.html" class="sector-link">Arroz</a>
+                    <a href="azucar.html" class="sector-link">Azúcar</a>
+                    <a href="fruticola_citricos.html" class="sector-link">Frutícola - Cítricos</a>
+                    <a href="lactea.html" class="sector-link">Láctea</a>
+                    <a href="maiz.html" class="sector-link">Maíz</a>
+                    <a href="trigo.html" class="sector-link">Trigo</a>
+                    <a href="vitivinicultura.html" class="sector-link">Vitivinicultura</a>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div class="sector-container">
+                    <a href="carnica_aviar.html" class="sector-link">Aviar</a>
+                    <a href="carnica_porcina.html" class="sector-link">Porcina</a>
+                    <a href="carnica_vacuna.html" class="sector-link">Vacuna</a>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div class="sector-container">
+                    <a href="automotriz.html" class="sector-link">Automotriz y Autopartista</a>
+                    <a href="forestal.html" class="sector-link">Forestal, Papel y Muebles</a>
+                    <a href="metalurgia.html" class="sector-link">Industrias Metálicas y Siderurgia</a>
+                    <a href="maquinaria.html" class="sector-link">Maquinaria Agrícola</a>
+                    <a href="mineria.html" class="sector-link">Minería Metalífera</a>
+                    <a href="petroquimica.html" class="sector-link">Petroquímica - Plástica</a>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div class="sector-container">
+                    <a href="energias.html" class="sector-link">Energías Alternativas</a>
+                    <a href="hidrocarburos.html" class="sector-link">Hidrocarburos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 📌 Scripts -->
+    <script src="js/dynamicLoader.js" defer></script>
+    <script src="js/sectores.js" defer></script>
+
+</body>
+
+</html>

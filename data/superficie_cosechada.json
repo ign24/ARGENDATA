@@ -1,0 +1,15 @@
+{
+    "superficie_cosechada": [
+        { "anio": 2010, "hectareas": 45000 },
+        { "anio": 2011, "hectareas": 47000 },
+        { "anio": 2012, "hectareas": 43000 },
+        { "anio": 2013, "hectareas": 49000 },
+        { "anio": 2014, "hectareas": 51000 },
+        { "anio": 2015, "hectareas": 48000 },
+        { "anio": 2016, "hectareas": 50000 },
+        { "anio": 2017, "hectareas": 53000 },
+        { "anio": 2018, "hectareas": 52000 },
+        { "anio": 2019, "hectareas": 54000 },
+        { "anio": 2020, "hectareas": 56000 }
+    ]
+}

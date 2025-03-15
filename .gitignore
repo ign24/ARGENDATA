@@ -1,0 +1,18 @@
+# Node.js / JavaScript
+node_modules/
+*.log
+package-lock.json
+
+# Editor / IDE
+.vscode/
+.idea/
+.DS_Store
+
+# Build / Cache
+dist/
+build/
+*.bak
+*.swp
+
+# Configuración de sistema
+.env

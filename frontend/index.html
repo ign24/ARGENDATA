@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARGENDATA - Dashboard</title>
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Estilos y Componentes -->
+    <script type='text/javascript'
+        src='https://cdn.jsdelivr.net/gh/datosgobar/series-tiempo-ar-explorer@ts_components_2.0.0/dist/js/components.js'></script>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/datosgobar/series-tiempo-ar-explorer@ts_components_2.0.0/dist/css/components.css"
+        type="text/css">
+
+    <!-- Particulas -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <!-- Font Awesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix"></script>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <div id="dynamic-loader-container"></div>
+        <!-- Loader -->
+        <div id="loader" class="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black z-50">
+            <ul class="loader-bars">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+
+        <div id="particles-js"></div>
+        <div id="dynamic-loader-container"></div>
+        <!-- 📌 Contenedor derecho (Botón + Noticias) -->
+        <div id="contenedor-derecho">
+            <button id="generar-reporte-btn" class="btn-reporte">
+                <i class="fas fa-file-alt"></i> Generar Reporte
+            </button>
+
+            <!-- 📌 Tarjeta de Noticias -->
+            <div id="tarjeta-noticias" class="tarjeta-noticias aparecer">
+                <h3 class="text-lg font-bold text-white mb-2">Últimas Noticias</h3>
+                <ul id="lista-noticias"></ul>
+            </div>
+        </div>
+
+
+        <!-- Contenido Principal -->
+        <div class="container mx-auto px-4 py-12">
+            <h1 class="dashboard-title">DASHBOARD</h1>
+            <!-- 📊 Indicadores Económicos -->
+            <div class="container mx-auto py-6">
+                <div class="section-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="icon">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    <h4>DÓLAR</h4>
+                </div>
+                <div id="tarjetas-dolares"></div>
+            </div>
+            <div class="section-title">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="icon">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
+                </svg>
+                <h4>Indicadores Macroeconómicos</h4>
+            </div>
+            <div class="ipc-container">
+                <!-- 📊 Tarjeta IPC (Gráfico de Barras) -->
+                <div id="tarjeta-ipc" class="tarjeta-ipc aparecer">
+                    <h3>Índice de Precios al Consumidor (IPC)</h3>
+                    <p id="ipc-general"></p>
+                    <canvas id="ipcChart"></canvas>
+                </div>
+                <div class="tarjeta-deuda aparecer">
+                    <div class="tarjeta-header">
+                        <h3>Composición de la Deuda</h3>
+                        <p id="totalDeuda" class="total-deuda-text"></p>
+                    </div>
+                    <canvas id="deudaPorMonedaChart"></canvas>
+                    <div id="deudaLabels" class="deuda-labels"></div>
+                </div>
+            </div>
+            <!-- 📊 Contenedor de gráficos económicos -->
+            <div class="contenedor-graficos">
+                <!-- Tarjeta PIB -->
+                <div id="tarjeta-pib" class="tarjeta-ipc aparecer">
+                    <h3>Producto Interno Bruto (PIB) - Evolución</h3>
+                    <canvas id="pibChart"></canvas>
+                </div>
+
+                <!-- Tarjeta EMAE -->
+                <div id="tarjeta-emae" class="tarjeta-ipc aparecer">
+                    <h3>Estimador Mensual de Actividad Económica (EMAE)</h3>
+                    <canvas id="emaeChart"></canvas>
+                </div>
+            </div>
+            <!-- 📊 Contenedor de Gráficos -->
+            <div class="ipc-container">
+                <!-- 📊 Tarjeta para el Gráfico de Crecimiento de Sectores -->
+                <div id="tarjeta-crecimiento" class="tarjeta-ipc aparecer">
+                    <h3 class="text-lg font-bold text-white mb-2">Crecimiento de Sectores Económicos</h3>
+                    <canvas id="graficoCrecimiento" class="w-full" style="max-height: 400px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Scripts -->
+    <script src="js/loader.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js" defer></script>
+    <script src="js/dynamicLoader.js" defer></script>
+    <script src="js/cotizacionesDolares.js" defer></script>
+    <script src="js/ipc.js" defer></script>
+    <script src="js/deudaPorMoneda.js" defer></script>
+    <script src="js/pib.js" defer></script>
+    <script src="js/emae.js" defer></script>
+    <script src="js/graficoSectores.js"></script>
+    <script src="js/reporte.js"></script>
+    <script src="js/noticias.js"></script>
+
+
+</body>
+
+</html>

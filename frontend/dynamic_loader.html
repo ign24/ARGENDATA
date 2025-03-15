@@ -1,0 +1,177 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARGENDATA - Dashboard</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Estilos y Componentes -->
+    <script type='text/javascript'
+        src='https://cdn.jsdelivr.net/gh/datosgobar/series-tiempo-ar-explorer@ts_components_2.0.0/dist/js/components.js'></script>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/datosgobar/series-tiempo-ar-explorer@ts_components_2.0.0/dist/css/components.css"
+        type="text/css">
+    <link rel="stylesheet" href="css/styles.css"> <!-- Estilos generales -->
+    <link rel="stylesheet" href="css/chat.css"> <!-- Estilos específicos del chat -->
+
+    <!-- Font Awesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+</head>
+
+<body>
+    <header class="header">
+
+        <!-- 📌 Izquierda: Botón de menú y Logo -->
+        <div class="flex items-center space-x-3">
+            <button id="toggleBtn" class="text-white hover:bg-white p-2 rounded-md transition">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
+                </svg>
+            </button>
+            <img src="../frontend/assets/img/logo.png" alt="Logo" class="w-12 h-12">
+            <h1 class="text-xl font-bold text-white">Centro de Monitoreo Argentino</h1>
+        </div>
+
+
+        <!-- 📌 Centro: Barra de Búsqueda -->
+        <div class="relative hidden sm:block">
+            <input type="text" placeholder="Buscar..."
+                class="px-3 py-1 pl-8 text-sm rounded-full bg-white bg-opacity-20 text-white focus:outline-none focus:ring-2 focus:ring-blue-300">
+            <svg class="absolute left-2 top-2 text-gray-300 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1111.293 3.293l4.002 4.002a1 1 0 01-1.415 1.415l-4.002-4.002A6 6 0 012 8z"
+                    clip-rule="evenodd"></path>
+            </svg>
+        </div>
+
+
+        <!-- 📌 Derecha: Iconos de Usuario -->
+        <div class="flex space-x-4 items-center">
+            <a href="https://github.com/tuperfil" target="_blank" class="text-gray-300 hover:text-white">
+                <i class="fab fa-github text-lg"></i>
+            </a>
+            <button class="relative text-gray-300 hover:text-white p-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+                </svg>
+                <span class="absolute top-0 right-0 bg-red-500 text-xs text-white px-1 rounded-full">3</span>
+            </button>
+
+            <button class="text-gray-300 hover:text-white">
+                <i class="fas fa-user-circle text-lg"></i>
+            </button>
+        </div>
+
+    </header>
+
+    <!-- 📌 Sidebar con diseño compacto -->
+    <div id="sidebar"
+        class="w-56 h-screen fixed left-0 top-0 transition-all duration-500 transform bg-black bg-opacity-10 backdrop-blur-lg shadow-2xl border border-white border-opacity-25 rounded-r-xl p-4">
+        <h1 class="text-lg font-bold text-white mb-4 px-2">Menú</h1>
+
+        <ul class="space-y-1">
+            <li>
+                <a href="index.html"
+                    class="flex items-center text-white hover:bg-white hover:bg-opacity-20 p-2 rounded gap-3 text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                    </svg>
+                    Inicio
+                </a>
+            </li>
+            <li>
+                <a href="sectores.html"
+                    class="flex items-center text-white hover:bg-white hover:bg-opacity-20 p-2 rounded gap-3 text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 0 1 0 3.75H5.625a1.875 1.875 0 0 1 0-3.75Z" />
+                    </svg>
+                    Sectores
+                </a>
+            </li>
+            <li>
+                <a href="calculadora.html"
+                    class="flex items-center text-white hover:bg-white hover:bg-opacity-20 p-2 rounded gap-3 text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z" />
+                    </svg>
+                    Calculadora
+                </a>
+            </li>
+            <li>
+                <a href="registrarse.html"
+                    class="flex items-center text-white hover:bg-white hover:bg-opacity-20 p-2 rounded gap-3 text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z" />
+                    </svg>
+                    Registrarse
+                </a>
+            </li>
+
+            <li>
+                <a href="contacto.html"
+                    class="flex items-center text-white hover:bg-white hover:bg-opacity-20 p-2 rounded gap-3 text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                    Contacto
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    <!-- 📌 Botón flotante para abrir el chat -->
+    <button id="chat-button" onclick="toggleChat()" class="flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+            class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+        </svg>
+        Chatbot
+    </button>
+
+
+    <!-- Contenedor del chat -->
+    <div id="chat-container">
+        <div class="chat-header">
+
+            <div class="chat-buttons">
+                <button id="fullscreen-chat-btn" class="chat-btn" onclick="toggleFullScreenChat()">⛶</button>
+                <h3>Preguntale a la IA</h3>
+                <button id="close-chat" class="chat-btn" onclick="toggleChat()">&times;</button>
+            </div>
+        </div>
+        <div id="chat-box"></div> <!-- Aquí aparecen los mensajes -->
+
+        <!-- Contenedor de input -->
+        <div id="chat-input-container">
+            <textarea id="mensaje" placeholder="Escribe aquí..."
+                onkeypress="if(event.key === 'Enter') enviarMensaje()"></textarea>
+            <button onclick="enviarMensaje()" id="send-button">Enviar</button>
+        </div>
+    </div>
+</body>
+<script src="js/chat.js"></script>
+<script src="js/sidebar.js"></script>

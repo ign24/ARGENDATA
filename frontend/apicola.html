@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apícola - Datos y Visualizaciones</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            background: url('assets/img/background.webp') no-repeat center center fixed;
+            background-size: cover;
+            color: #f1f1f1;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.7);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.349);
+            margin-bottom: 20px;
+        }
+
+        .grafico-container {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 16px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            color: #f1f1f1;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: background 0.3s, border 0.3s, transform 0.2s;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 2px solid #ffffff;
+            transform: scale(1.05);
+            color: #ffffff;
+        }
+
+        /* Estilo del modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            width: 90%;
+            height: 90%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        #graficoPantallaCompleta {
+            width: 100%;
+            height: 100%;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay">
+        <!-- 📌 Navbar -->
+        <nav class="">
+            <div class="container mx-auto flex justify-between items-center">
+                <h1 class="text-xl font-bold">Apícola</h1>
+                <a href="sectores.html" class="nav-link">Volver</a>
+            </div>
+        </nav>
+
+        <!-- 📌 Contenedor Principal -->
+        <div class="container mx-auto px-6 py-12">
+            <h2 class="title">Indicadores del Sector Apícola</h2>
+
+            <!-- 📊 Gráficos en Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                
+                <!-- 📈 Evolución de la Producción de Miel -->
+                <section class="">
+                    <h2 class="text-xl font-semibold mb-4">Evolución de la Producción de Miel</h2>
+                    <canvas id="graficoEvolucionApicola"></canvas>
+                    <button onclick="verPantallaCompleta('graficoEvolucionApicola')" class="nav-link mt-4">Pantalla Completa</button>
+                </section>
+
+                <!-- 📉 Variación Interanual (%) -->
+                <section class="">
+                    <h2 class="text-xl font-semibold mb-4">Variación Interanual (%)</h2>
+                    <canvas id="graficoVariacionApicola"></canvas>
+                    <button onclick="verPantallaCompleta('graficoVariacionApicola')" class="nav-link mt-4">Pantalla Completa</button>
+                </section>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 📌 Modal para pantalla completa -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarPantallaCompleta()">&times;</span>
+            <canvas id="graficoPantallaCompleta"></canvas>
+        </div>
+    </div>
+
+    <!-- 📌 Scripts -->
+    <script>
+        let currentChart = null;
+
+        function verPantallaCompleta(id) {
+            let modal = document.getElementById('modal');
+            let modalCanvas = document.getElementById('graficoPantallaCompleta');
+            let originalCanvas = document.getElementById(id);
+
+            let chartData = Chart.getChart(originalCanvas);
+            if (!chartData) return;
+
+            modal.style.display = "flex";
+
+            // Ajustar tamaño del canvas al tamaño de la pantalla
+            modalCanvas.width = window.innerWidth * 0.9;
+            modalCanvas.height = window.innerHeight * 0.9;
+
+            // Si ya hay un gráfico abierto en pantalla completa, destruirlo
+            if (currentChart) {
+                currentChart.destroy();
+            }
+
+            let ctx = modalCanvas.getContext('2d');
+            ctx.clearRect(0, 0, modalCanvas.width, modalCanvas.height);
+
+            currentChart = new Chart(ctx, chartData.config);
+        }
+
+        function cerrarPantallaCompleta() {
+            document.getElementById('modal').style.display = "none";
+            if (currentChart) {
+                currentChart.destroy();
+                currentChart = null;
+            }
+        }
+    </script>
+
+    <script src="js/apicolaEvolucion.js"></script>
+    <script src="js/apicolaVariacion.js"></script>
+    
+
+</body>
+</html>

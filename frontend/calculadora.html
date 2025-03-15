@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARGENDATA - Dashboard</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Estilos y Componentes -->
+    <script type='text/javascript'
+        src='https://cdn.jsdelivr.net/gh/datosgobar/series-tiempo-ar-explorer@ts_components_2.0.0/dist/js/components.js'></script>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/datosgobar/series-tiempo-ar-explorer@ts_components_2.0.0/dist/css/components.css"
+        type="text/css">
+    <link rel="stylesheet" href="css/calculadora.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="dynamic-loader-container"></div>
+        <!-- 📌 Dashboard de la Calculadora -->
+        <div class="dashboard-container">
+
+            <h2 class="title">Calculadora Avanzada</h2>
+            <hr class="separator">
+            <!-- 📌 Pestañas -->
+            <div class="tabs">
+                <button class="tab-button active" data-tab="regresion">Regresión Lineal</button>
+                <button class="tab-button" data-tab="media">Media</button>
+                <button class="tab-button" data-tab="mediana">Mediana</button>
+                <button class="tab-button" data-tab="moda">Moda</button>
+                <button class="tab-button" data-tab="desviacion">Desviación Estándar</button>
+                <button class="tab-button" data-tab="correlacion">Correlación</button>
+                <button class="tab-button" data-tab="variacion">Variación Interanual</button>
+                <button class="tab-button" data-tab="crecimiento">Tasa de Crecimiento</button>
+            </div>
+            <hr class="separator">
+            <!-- 📌 Contenedor de pestañas -->
+            <div class="tab-content-container">
+                <div id="regresion" class="tab-content active">
+                    <h3 style="font-size: 1.2rem; margin-bottom:15px">Regresión Lineal</h3>
+                    <input type="text" id="x-values" placeholder="Años (Ej: 2010,2011,2012)">
+                    <input type="text" id="y-values" placeholder="Producción/Precios (Ej: 100,150,200)">
+                    <input type="number" id="predict-x" placeholder="Predecir para año">
+                    <button onclick="calcularRegresion()" class="btn">Calcular</button>
+                    <p id="resultadoRegresion"></p>
+                </div>
+                <div id="media" class="tab-content">
+                    <h3 style="font-size: 1.2rem; margin-bottom:15px">Media</h3>
+                    <input type="text" id="valores-media" placeholder="Valores separados por coma">
+                    <button onclick="calcularMedia()" class="btn">Calcular</button>
+                    <p id="resultadoMedia"></p>
+                </div>
+                <div id="mediana" class="tab-content">
+                    <h3 style="font-size: 1.2rem; margin-bottom:15px">Mediana</h3>
+                    <input type="text" id="valores-mediana" placeholder="Valores separados por coma">
+                    <button onclick="calcularMediana()" class="btn">Calcular</button>
+                    <p id="resultadoMediana"></p>
+                </div>
+                <div id="moda" class="tab-content">
+                    <h3 style="font-size: 1.2rem; margin-bottom:15px">Moda</h3>
+                    <input type="text" id="valores-moda" placeholder="Valores separados por coma">
+                    <button onclick="calcularModa()" class="btn">Calcular</button>
+                    <p id="resultadoModa"></p>
+                </div>
+                <div id="desviacion" class="tab-content">
+                    <h3 style="font-size: 1.2rem; margin-bottom:15px">Desviación Estándar</h3>
+                    <input type="text" id="valores-desviacion-poblacion" placeholder="Valores separados por coma">
+                    <button onclick="calcularDesviacionPoblacion()" class="btn">Calcular</button>
+                    <p id="resultadoDesviacionPoblacion"></p>
+                </div>
+                <div id="correlacion" class="tab-content">
+                    <h3 style="font-size: 1.2rem; margin-bottom:15px">Correlación</h3>
+                    <input type="text" id="valores-x-correlacion" placeholder="Valores X separados por coma">
+                    <input type="text" id="valores-y-correlacion" placeholder="Valores Y separados por coma">
+                    <button onclick="calcularCorrelacion()" class="btn">Calcular</button>
+                    <p id="resultadoCorrelacion"></p>
+                </div>
+                <div id="variacion" class="tab-content">
+                    <h3 style="font-size: 1.2rem; margin-bottom:20px">Índice de Variación Interanual (%)</h3>
+                    <input type="text" id="valores-interanual" placeholder="Valores anuales separados por coma">
+                    <button onclick="calcularVariacionInteranual()" class="btn">Calcular</button>
+                    <p id="resultadoVariacion"></p>
+                </div>
+                <div id="crecimiento" class="tab-content">
+                    <h3 style="font-size: 1.2rem; margin-bottom:15px">Tasa de Crecimiento (%)</h3>
+                    <input type="number" id="valor-pasado" placeholder="Valor inicial">
+                    <input type="number" id="valor-actual" placeholder="Valor final">
+                    <button onclick="calcularCrecimiento()" class="btn">Calcular</button>
+                    <p id="resultadoCrecimiento"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 📌 Scripts -->
+    <script src="js/dynamicLoader.js" defer></script>
+    <script src="js/calculadora.js" defer></script>
+
+</body>
+
+</html>
