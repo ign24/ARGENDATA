@@ -195,3 +195,191 @@
 .chat-btn:hover {
     color: #ff7b7b;
 }
+/* 📌 Animación de "Carga de Energía" */
+@keyframes energyPulse {
+    0% { transform: scale(1); box-shadow: 0 0 6px rgba(0, 255, 255, 0.3); }
+    20% { transform: scale(1.1); box-shadow: 0 0 14px rgba(0, 255, 255, 0.6); }
+    50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(0, 255, 255, 0.8); }
+    80% { transform: scale(1.08); box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
+    100% { transform: scale(1); box-shadow: 0 0 4px rgba(0, 255, 255, 0.2); }
+}
+
+/* 📌 Animación de "Fluctuación de Energía" */
+@keyframes glitchEffect {
+    0% { filter: hue-rotate(0deg) blur(0px); }
+    25% { filter: hue-rotate(30deg) blur(1px); }
+    50% { filter: hue-rotate(-20deg) blur(0px); }
+    75% { filter: hue-rotate(10deg) blur(1px); }
+    100% { filter: hue-rotate(0deg) blur(0px); }
+}
+
+/* 📌 Animación de "Elevación Antigravedad" */
+@keyframes levitate {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* 📌 Aplicar la animación futurista */
+#chat-button.notify {
+    animation: energyPulse 7s ease-in-out 1, 
+               glitchEffect 4s ease-in-out 2, 
+               levitate 3s ease-in-out infinite alternate;
+}
+
+
+/* 📌 Animación de aparición con deslizamiento */
+@keyframes slideInFade {
+    0% { opacity: 0; transform: translateY(20px) scale(0.95); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* 📌 Animación de salida con desvanecimiento */
+@keyframes fadeOut {
+    0% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(20px) scale(0.95); }
+}
+
+/* 📌 Estilos para el cuadro del personaje */
+.chat-notification {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(to right, #3fcfe831, #03507a44);
+    backdrop-filter: blur(15px); /* Efecto desenfoque */
+    border-radius: 15px;
+    padding: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.123);
+    transition: opacity 0.5s ease-in-out, transform 0.3s ease-in-out;
+    opacity: 0;
+    transform: translateY(10px);
+    max-width: 300px; /* ✅ Ajuste dinámico del cuadro */
+    z-index: 90;
+}
+
+/* 📌 Cuando la notificación está activa */
+.chat-notification.show {
+    opacity: 1;
+    transform: translateY(0);
+    
+}
+
+/* 📌 Imagen del personaje */
+.chat-gif {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    justify-content: center;
+}
+
+/* 📌 Texto del mensaje */
+.chat-text {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+    max-width: 100%;
+    text-align: center; /* ✅ Centra el texto */
+    padding: 10px 14px; /* ✅ Espaciado interno */
+    word-wrap: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
+    display: block;
+}
+
+/* 📌 Contenedor del personaje */
+.chatbot-container {
+    position: fixed;
+    bottom: 50px;
+    right: 20px;
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-in-out, transform 0.4s ease-in-out;
+}
+
+/* 📌 Mostrar el personaje con animación */
+.chatbot-container.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 📌 Personaje animado */
+.chatbot-character {
+    width: 100px;  
+    height: auto;
+    background: none;
+    display: block;
+    animation: moveCharacter 4s infinite alternate ease-in-out;
+}
+
+/* 📌 Animación del personaje (ligero movimiento) */
+@keyframes moveCharacter {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-3px); }
+}
+
+/* 📌 Estilo del diálogo */
+.chatbot-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.75);
+    max-width: 280px;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+/* 📌 Pensando... */
+.chatbot-thinking {
+    font-style: italic;
+    opacity: 0.6;
+}
+/* 📌 Contenedor del chat */
+#chat-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 10px;
+    width: 100%;
+}
+
+/* 📌 Contenedor de cada mensaje */
+.chat-message-container {
+    display: flex;
+    width: 100%;
+}
+
+/* 📌 Mensajes del usuario y del bot */
+.user, .bot {
+    max-width: 75%; /* ✅ Ajusta el tamaño del mensaje dinámicamente */
+    word-wrap: break-word; /* ✅ Evita que el texto se corte */
+    white-space: pre-wrap; /* ✅ Mantiene los saltos de línea */
+    padding: 12px 15px;
+    border-radius: 12px;
+    font-size: 15px;
+    line-height: 1.5;
+    text-align: left;
+    display: inline-block;
+}
+
+/* 📌 Mensajes del usuario */
+.user {
+    align-self: flex-end;
+    background: #00c8ff;
+    color: white;
+    text-align: right;
+}
+
+/* 📌 Mensajes del bot */
+.bot {
+    align-self: flex-start;
+    background: #03517a;
+    color: white;
+    text-align: left;
+}

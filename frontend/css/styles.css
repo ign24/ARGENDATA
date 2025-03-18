@@ -98,15 +98,23 @@
 body {
     padding-top: 15px; /* Ajuste para header (60px) + ticker (40px aprox.) */
 }
+@keyframes borderGlow {
+    0% {
+        border-image-source: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.7), transparent);
+    }
+    50% {
+        border-image-source: linear-gradient(90deg, rgba(0, 255, 255, 0.7), transparent, rgba(0, 255, 255, 0.7));
+    }
+    100% {
+        border-image-source: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.7), transparent);
+    }
+}
 
-
-/* 📌 Header con efecto vidrio*/
+/* ------------------------------------📌 Header con efecto vidrio y borde luminoso -----------------------------------------------*/
 header {
     position: fixed;
     background: rgba(0, 0, 0, 0.8);
-    /* Mayor transparencia */
-    backdrop-filter: blur(12px);
-    /* 🔥 Más desenfoque */
+    backdrop-filter: blur(12px); /* 🔥 Más desenfoque */
     border-radius: 6px;
     padding: 8px 12px;
     top: 0;
@@ -117,7 +125,11 @@ header {
     align-items: center;
     justify-content: space-between;
     z-index: 100;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden; /* Evita que el brillo sobresalga */
+    border-width: 1px;
+    border-style: solid;
+    border-image-slice: 1;
+    animation: borderGlow 3s infinite ease-in-out;
 }
 
 /* 📌 Responsive: Oculta la barra de búsqueda en móviles */
@@ -126,6 +138,8 @@ header {
         display: none;
     }
 }
+
+/* ------------------------------------📌 BODY -----------------------------------------------*/
 
 body {
     background: linear-gradient(to bottom right, #000000, #0a0e18, #1e293b);
@@ -141,17 +155,6 @@ body {
     width: 100%;
 }
 
-/* 🔹 Crear un contenedor para agrupar el contenido */
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Distribuye los elementos */
-    align-items: stretch; /* Asegura que los elementos ocupen todo el ancho */
-    width: 90%; /* Ocupa casi todo el ancho disponible */
-    max-width: 1400px; /* Limita el ancho máximo para evitar que se estire demasiado */
-    margin: 0 auto; /* Centra el contenido horizontalmente */
-    padding: 20px;
-}
 /* 🔹 Asegurar que los elementos internos ocupen todo el ancho */
 .container, #dynamic-loader-container {
     width: 100%;
@@ -164,15 +167,16 @@ body {
     gap: 20px;
     width: 100%;
 }
+
 /* 🔹 Títulos */
 h1,
 h2,
 h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 250;
+    font-size:medium;
     padding: 0.1rem;
     font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #00c8ff;
 }
 
 /* 🔹 Subtítulos del dashboard */
@@ -198,7 +202,7 @@ h6 {
     justify-content: flex-start;
 }
 
-/* 📌 Título "DASHBOARD" con efecto de gradiente */
+/* ------------------------------------📌 TÍTULO -----------------------------------------------*/
 .dashboard-title {
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 2rem;
@@ -216,7 +220,7 @@ h6 {
     text-shadow: 2px 2px 10px rgba(0, 200, 255, 0.1);
     justify-content: flex-start;
 }
-
+/* ------------------------------------📌 TARJETAS -----------------------------------------------*/
 .tarjeta-dolar {
     display: flex;
     flex-direction: column;
@@ -338,6 +342,13 @@ a:hover {
     }
 }
 
+
+
+/* ------------------------------------📌SIDEBAR -----------------------------------------------*/
+
+
+
+
 /* 📌 Sidebar con efecto vidrio */
 #sidebar {
     background: rgba(0, 0, 0, 0.288);
@@ -374,8 +385,10 @@ a:hover {
     background: rgba(255, 255, 255, 0.089);
     transform: scale(1);
 }
+/* ------------------------------------📌DASHBOARD -----------------------------------------------*/
 
-/* 📌 Ajuste automático de tamaño para la tarjeta IPC */
+
+/* 📌 TARJETA IPC */
 .tarjeta-ipc {
     display: flex;
     flex-direction: column;
@@ -389,6 +402,7 @@ a:hover {
     text-align: left;
     gap: 1rem;
     z-index: 5;
+    min-width: 400px; /* Evita que se colapsen en pantallas grandes */
     width: 100%;
     /* Se expande completamente */
     max-width: 800px;
@@ -409,6 +423,7 @@ a:hover {
     font-size: 1.1rem;
     font-weight: 600;
     color: #00c8ff;
+    text-align: center;
 }
 
 /* 📌 Valor del IPC */
@@ -433,12 +448,12 @@ a:hover {
     margin-top: 10px;
     justify-content: flex-start;
     overflow-x: auto;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     width: calc(100% + 16px);
     overflow: visible;
 }
 
-/* 📊 Tarjeta más pequeña para el gráfico de torta */
+/* 📊 GRÁFICO DE DONA*/
 .tarjeta-deuda {
     backdrop-filter: blur(10px);
     padding: 5px;
@@ -446,7 +461,7 @@ a:hover {
     backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    text-align: left;
+    text-align: center;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     transform: translateY(20px) scale(0.95);
     width: 400px;
@@ -620,6 +635,7 @@ a:hover {
     height: auto !important;
     max-height: 400px;      /* Limitar la altura para mantener consistencia */
     max-width: 800px;       /* Alinear con los demás gráficos */
+    text-align: center;
 }
 /* 📌 Hover animado */
 .tarjeta-crecimiento:hover {
@@ -754,6 +770,7 @@ a:hover {
     width: 100%;
     max-width: 300px;
     margin-top: 15px;
+    text-align: center;
 }
 
 /* 📌 Lista de Noticias */
@@ -772,3 +789,202 @@ a:hover {
     background: rgba(255, 255, 255, 0.1);
 }
 
+#salariosChart {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 400px;
+    text-align: center;
+}
+
+
+/*------------------------------- 📌 Commodities ------------------------------------*/
+/* 📌 Tarjeta de commodities con efecto metálico mejorado */
+.commodities-card {
+    position: fixed;
+    right: 20px; /* 📌 Ubicación fija a la derecha */
+    top: 300px;  /* 📌 Se mantiene en su posición */
+    width: 300px;
+    height: 400px;
+    background: linear-gradient(to bottom right, #000000, #0a0e18, #1e293b);
+    backdrop-filter: blur(14px);
+    border-radius: 12px;
+    padding: 10px;
+    color: white;
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.08), 0 4px 8px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    z-index: 40; /* 📌 Eleva la tarjeta por encima de los demás elementos */
+}
+/* 📌 Pseudo-elemento para el reflejo metálico ultra realista con movimiento */
+.commodities-card::after {
+    content: "";
+    position: absolute;
+    top: -150%;
+    left: -170%;
+    width: 250%;
+    height: 250%;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.507) 15%,
+        rgba(180, 220, 255, 0.24) 40%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    transform: rotate(45deg);
+    animation: var(--animation-trigger, metallicLoop 7s ease-in forwards);
+    pointer-events: none;
+    opacity: 0.2;
+    filter: blur(5px);
+}
+/* 📌 Animación del brillo con movimiento realista */
+@keyframes metallicLoop {
+    0% {
+        top: -150%;
+        left: -170%;
+        transform: rotate(45deg) scale(1);
+        opacity: 0;
+        filter: blur(10px);
+    }
+    20% {
+        opacity: 0.2;
+        filter: blur(8px);
+    }
+    50% {
+        top: 50%;
+        left: 50%;
+        transform: rotate(47deg) scale(1.02); /* 🔹 Leve cambio en la rotación y escala */
+        opacity: 0.35;
+        filter: blur(5px);
+    }
+    80% {
+        opacity: 0.2;
+        filter: blur(8px);
+    }
+    100% {
+        top: 150%;
+        left: 170%;
+        transform: rotate(45deg) scale(1);
+        opacity: 0;
+        filter: blur(10px);
+    }
+}
+
+/* 📌 Título más compacto */
+.commodities-card h3 {
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* 📌 Tabla compacta */
+.commodities-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.7rem;
+}
+
+/* 📌 Encabezados más delgados */
+.commodities-table th {
+    background: rgba(255, 255, 255, 0.12);
+    padding: 4px;
+    font-size: 0.7rem;
+    text-align: left;
+}
+
+/* 📌 Celdas compactas */
+.commodities-table td {
+    padding: 4px;
+    font-size: 0.7rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 📌 Filas con menor altura */
+.commodities-table tr {
+    height: 20px;
+}
+
+/* 📌 Colores de variación de precio */
+.commodities-table .positive {
+    color: #2ecc71;
+    font-weight: bold;
+}
+
+.commodities-table .negative {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+
+/* 📌 Reducir altura de las filas */
+.commodities-table tr {
+    height: 16px !important;
+}
+
+/* 📌 Reducir padding y tamaño de fuente */
+.commodities-table td, .commodities-table th {
+    font-size: 0.6rem !important;
+    padding: 2px !important;
+}
+
+/* 📌 Asegurar visibilidad */
+.commodities-table td {
+    overflow: visible !important;
+}
+/* 📌 Ajustar tamaño solo para los gráficos de la tabla de commodities */
+.commodities-table canvas {
+    width: 50px;  /* Tamaño pequeño pero sin deformar */
+    height: 20px;
+    display: block;
+    margin: auto;
+}
+
+/* 📌 Reducir altura de filas para que entren todos los datos */
+.commodities-table tr {
+    height: 18px; /* Ajuste para mejor compactación */
+}
+
+/* 📌 Ajustar celdas para mantener todo ordenado */
+.commodities-table td, .commodities-table th {
+    font-size: 0.7rem; /* Tamaño más compacto sin perder legibilidad */
+    padding: 3px;
+    text-align: center;
+}
+
+/* 📌-------------------------------------------------------- Drag and drop ------------------------------------------------------------------*/
+
+/* 🔹 Tarjeta seleccionada */
+.seleccionada {
+    background: rgba(0, 255, 255, 0.11);
+}
+
+/* 🔹 Efecto cuando una tarjeta está en movimiento */
+.drag-en-movimiento {
+    opacity: 0.7;
+    transform: rotate(3deg);
+}
+
+/* 🔹 Tarjeta mientras se arrastra */
+.dragging {
+    opacity: 0.2;
+    transition: transform 0.2s ease-in-out;
+}
+
+/* 📌 Contenedor Principal */
+.dashboard-container {
+    max-width: fit-content; /* 📏 Controla el ancho total */
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+/* 📌-------------------------------------------------------- CONTENEDOR MAIN------------------------------------------------------------------*/
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    padding: 20px; /* 📌 Mantiene coherencia en la estructura */
+    justify-content: flex-start; /* 📌 Alinea todo a la izquierda */
+    text-align: center;
+}

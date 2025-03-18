@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ARGENDATA - Dashboard</title>
 
+
     <!-- Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -31,13 +31,17 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix"></script>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+
+
+
 </head>
 
 <body>
 
     <div class="wrapper">
         <div id="dynamic-loader-container"></div>
-        <!-- Loader -->
+        <!-- Loader
         <div id="loader" class="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black z-50">
             <ul class="loader-bars">
                 <li></li>
@@ -51,7 +55,7 @@
                 <li></li>
                 <li></li>
             </ul>
-        </div>
+        </div> -->
 
         <div id="particles-js"></div>
         <div id="dynamic-loader-container"></div>
@@ -59,8 +63,7 @@
         <div id="contenedor-derecho">
             <button id="generar-reporte-btn" class="btn-reporte">
                 <i class="fas fa-file-alt"></i> Generar Reporte
-            </button>
-
+            </button>            
             <!-- 📌 Tarjeta de Noticias -->
             <div id="tarjeta-noticias" class="tarjeta-noticias aparecer">
                 <h3 class="text-lg font-bold text-white mb-2">Últimas Noticias</h3>
@@ -92,51 +95,76 @@
                 </svg>
                 <h4>Indicadores Macroeconómicos</h4>
             </div>
-            <div class="ipc-container">
-                <!-- 📊 Tarjeta IPC (Gráfico de Barras) -->
-                <div id="tarjeta-ipc" class="tarjeta-ipc aparecer">
-                    <h3>Índice de Precios al Consumidor (IPC)</h3>
-                    <p id="ipc-general"></p>
-                    <canvas id="ipcChart"></canvas>
-                </div>
-                <div class="tarjeta-deuda aparecer">
-                    <div class="tarjeta-header">
-                        <h3>Composición de la Deuda</h3>
-                        <p id="totalDeuda" class="total-deuda-text"></p>
+            <div class="dashboard-container">
+                <div class="ipc-container">
+                    <!-- 📊 Tarjeta IPC (Gráfico de Barras) -->
+                    <div id="tarjeta-ipc" class="tarjeta tarjeta-ipc aparecer" draggable="true">
+                        <h3>Índice de Precios al Consumidor (IPC)</h3>
+                        <p id="ipc-general"></p>
+                        <canvas id="ipcChart"></canvas>
                     </div>
-                    <canvas id="deudaPorMonedaChart"></canvas>
-                    <div id="deudaLabels" class="deuda-labels"></div>
+                    <div class="tarjeta-deuda aparecer">
+                        <div class="tarjeta-header">
+                            <h3>Composición de la Deuda</h3>
+                            <p id="totalDeuda" class="total-deuda-text"></p>
+                        </div>
+                        <canvas id="deudaPorMonedaChart"></canvas>
+                        <div id="deudaLabels" class="deuda-labels"></div>
+                    </div>
                 </div>
-            </div>
-            <!-- 📊 Contenedor de gráficos económicos -->
-            <div class="contenedor-graficos">
-                <!-- Tarjeta PIB -->
-                <div id="tarjeta-pib" class="tarjeta-ipc aparecer">
-                    <h3>Producto Interno Bruto (PIB) - Evolución</h3>
-                    <canvas id="pibChart"></canvas>
+                <!-- 📊 Contenedor de gráficos económicos -->
+                <div class="contenedor-graficos">
+                    <!-- Tarjeta PIB -->
+                    <div id="tarjeta-pib" class="tarjeta-ipc aparecer"draggable="true">
+                        <h3>Producto Interno Bruto (PIB) - Evolución</h3>
+                        <canvas id="pibChart"></canvas>
+                    </div>
+
+                    <!-- Tarjeta EMAE -->
+                    <div id="tarjeta-emae" class="tarjeta-ipc aparecer"draggable="true">
+                        <h3>Estimador Mensual de Actividad Económica (EMAE)</h3>
+                        <canvas id="emaeChart"></canvas>
+                    </div>
+                </div>
+                <!-- 📊 Contenedor de Gráficos -->
+                <div class="ipc-container flex gap-6">
+                    <!-- 📊 Tarjeta para el Gráfico de Crecimiento de Sectores -->
+                    <div id="tarjeta-crecimiento" class="tarjeta-ipc aparecer flex-1">
+                        <h3 class="text-lg font-bold text-white mb-2">Crecimiento de Sectores Económicos</h3>
+                        <canvas id="graficoCrecimiento" class="w-full" style="max-height: 400px;"></canvas>
+                    </div>
+
+                    <!-- 📊 Tarjeta para la Variación de Costos de Construcción -->
+                    <div class="tarjeta-ipc aparecer flex-1">
+                        <h3>Variación de Costos de Construcción</h3>
+                        <canvas id="iccChart"></canvas>
+                    </div>
+                </div>
+                <!-- 📊 Fila para el Índice de Salarios -->
+                <div class="grid-container align-left">
+                    <div class="tarjeta-ipc aparecer">
+                        <h3>Variación Interanual del Índice de Salarios (2024)</h3>
+                        <canvas id="salariosChart"></canvas>
+                    </div>
+                    <!-- 📊 Gráfico de Variación Interanual del Índice de Precios de la Manufactura -->
+                    <div class="tarjeta-ipc aparecer">
+                        <h3 class="align-left">Variación Interanual del Índice de Precios de la Manufactura (IPM) - 2025
+                            [%]</h3>
+                        <canvas id="ipmChart"></canvas>
+                    </div>
                 </div>
 
-                <!-- Tarjeta EMAE -->
-                <div id="tarjeta-emae" class="tarjeta-ipc aparecer">
-                    <h3>Estimador Mensual de Actividad Económica (EMAE)</h3>
-                    <canvas id="emaeChart"></canvas>
-                </div>
-            </div>
-            <!-- 📊 Contenedor de Gráficos -->
-            <div class="ipc-container">
-                <!-- 📊 Tarjeta para el Gráfico de Crecimiento de Sectores -->
-                <div id="tarjeta-crecimiento" class="tarjeta-ipc aparecer">
-                    <h3 class="text-lg font-bold text-white mb-2">Crecimiento de Sectores Económicos</h3>
-                    <canvas id="graficoCrecimiento" class="w-full" style="max-height: 400px;"></canvas>
-                </div>
             </div>
         </div>
     </div>
+    <!-- 📌 Contenedor para la tabla de commodities -->
+    <div id="commodities-container"></div>
     <!-- Scripts -->
     <script src="js/loader.js"></script>
     <script src="js/particles.js"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js" defer></script>
     <script src="js/dynamicLoader.js" defer></script>
+    <script src="js/commodities.js" defer></script>
     <script src="js/cotizacionesDolares.js" defer></script>
     <script src="js/ipc.js" defer></script>
     <script src="js/deudaPorMoneda.js" defer></script>
@@ -145,6 +173,11 @@
     <script src="js/graficoSectores.js"></script>
     <script src="js/reporte.js"></script>
     <script src="js/noticias.js"></script>
+    <script src="js/iccChart.js"></script>
+    <script src="js/salariosChart.js"></script>
+    <script src="js/ipmChart.js"></script>
+    <script src="js/dragDrop.js" defer></script>
+
 
 
 </body>

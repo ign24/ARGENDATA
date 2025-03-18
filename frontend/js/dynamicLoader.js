@@ -8,7 +8,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 const html = await response.text();
                 element.innerHTML = html;
 
-                // Si hay un callback, ejecutarlo después de cargar el HTML
+                console.log(`✅ ${file} cargado correctamente`);
+
+                // Esperar a que el header se inserte antes de aplicar la animación
+                setTimeout(() => {
+                    const header = document.querySelector("header");
+                    if (header) {
+                        header.classList.add("animacion-reflejo");
+                        console.log("✨ Animación de reflejo aplicada al header");
+                    }
+                }, 50); // Pequeño delay para asegurar que el DOM se actualizó
+
+                // Ejecutar el callback después de cargar el HTML
                 if (callback) callback();
             } catch (error) {
                 console.error(error);
@@ -16,9 +27,18 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    // Cargar `dynamic_loader.html` y luego ejecutar `sidebar.js` y `chat.js`
+    function cargarScript(url, callback) {
+        const script = document.createElement("script");
+        script.src = url;
+        script.onload = callback;
+        document.body.appendChild(script);
+    }
+
+    // Cargar `dynamic_loader.html` y luego los scripts dependientes
     loadComponent("dynamic-loader-container", "dynamic_loader.html", () => {
-        // Asegurar que el botón toggle del sidebar funcione correctamente
+        console.log("✅ dynamic_loader.html ha sido cargado");
+
+        // Asegurar que el sidebar funcione correctamente
         const toggleBtn = document.getElementById("toggleBtn");
         const sidebar = document.getElementById("sidebar");
 
@@ -28,13 +48,17 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
 
-        // Cargar scripts después de insertar `dynamic_loader.html`
-        const sidebarScript = document.createElement("script");
-        sidebarScript.src = "js/sidebar.js";
-        document.body.appendChild(sidebarScript);
+        // Cargar `sidebar.js`
+        cargarScript("js/sidebar.js", () => console.log("✅ sidebar.js ha sido cargado"));
 
-        const chatScript = document.createElement("script");
-        chatScript.src = "js/chat.js";
-        document.body.appendChild(chatScript);
+        // Cargar `chat.js` y ejecutar la función de notificación
+        cargarScript("js/chat.js", () => {
+            console.log("✅ chat.js ha sido cargado");
+            if (typeof iniciarNotificacionChat === "function") {
+                iniciarNotificacionChat();
+            } else {
+                console.error("❌ La función iniciarNotificacionChat no está definida.");
+            }
+        });
     });
 });

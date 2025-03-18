@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             // Colores modernos basados en la paleta de la página, con valores negativos en rojo
-            const colors = variaciones.map(val => val < 0 ? "#ff4d4d" : "#00c8ff");
+            const colors = variaciones.map(val => val < 0 ? "#ff4d4d" : "skyblue");
 
             // Configuración del canvas para evitar pixelado
             const canvas = document.getElementById("graficoCrecimiento");
@@ -37,9 +37,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         data: variaciones,
                         backgroundColor: colors,
                         barThickness: 7,
-                        borderWidth: 1.5,
+                        borderWidth: 1,
                         borderColor: colors,
-                        hoverBackgroundColor: colors.map(val => val === "#ff4d4d" ? "#ff6666" : "#3FD0E8"),
+                        hoverBackgroundColor: colors.map(val => val === "#ff4d4d" ? "#ff6666" : "#00c8ff"),
                         barPercentage: 0.8,
                         categoryPercentage: 0.7,
                     }]

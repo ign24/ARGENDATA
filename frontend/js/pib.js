@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         data: data,
                         backgroundColor: "rgba(0, 200, 255, 0.6)", 
                         borderColor: "#00c8ff",
-                        borderWidth: 1
+                        borderWidth: 2
                     }]
                 },
                 options: {

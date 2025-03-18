@@ -13,8 +13,33 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-# 📌 Inicializar FastAPI
+from fastapi import FastAPI, HTTPException
+import boto3
+import json
+import os
+
 app = FastAPI()
+
+# Cliente AWS Lambda
+lambda_client = boto3.client("lambda", region_name="us-east-1")
+LAMBDA_FUNCTION_NAME = os.getenv("LAMBDA_FUNCTION_NAME", "GenerarReporteBedrock")
+
+@app.post("/generar_reporte")
+async def generar_reporte():
+    """Llama a AWS Lambda para generar un reporte."""
+    try:
+        response = lambda_client.invoke(
+            FunctionName=LAMBDA_FUNCTION_NAME,
+            InvocationType="RequestResponse"
+        )
+
+        result = json.loads(response["Payload"].read())
+        if response["StatusCode"] == 200:
+            return json.loads(result["body"])
+        else:
+            raise HTTPException(status_code=500, detail="Error al generar el reporte.")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 # 📌 Configuración de CORS
 origins = ["http://127.0.0.1:5500", "http://localhost:5500"]
