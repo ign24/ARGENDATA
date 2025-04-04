@@ -38,8 +38,11 @@
                         d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
                 </svg>
             </button>
-            <img src="../frontend/assets/img/logo.png" alt="Logo" class="w-8 h-8 logo-glow">
-            <h1 class="text-xl font-semibold text-white font-inter">ARGENDATA</h1>
+            <div class="logo-3d-glass w-12 h-12">
+                <img src="../frontend/assets/img/logo.png" alt="Logo" class="w-full h-full object-contain" />
+            </div>
+
+
         </div>
 
 
@@ -53,6 +56,16 @@
                     clip-rule="evenodd"></path>
             </svg>
         </div>
+
+        <!-- Toggle modo claro/oscuro -->
+        <button id="toggle-theme" class="transition hover:scale-105">
+            <img id="theme-icon" src="../frontend/assets/img/themes.png" alt="Cambiar tema" class="w-6 h-6">
+        </button>
+        <!-- 🔘 Modo Lite -->
+        <button id="toggle-animations-btn"
+            class="text-white hover:text-blue-400 px-2 py-1 text-xs border border-white rounded-md">
+            Modo Lite: OFF
+        </button>
 
 
         <!-- 📌 Derecha: Iconos de Usuario -->
@@ -78,7 +91,7 @@
 
     <!-- 📌 Sidebar con diseño compacto -->
     <div id="sidebar"
-        class="w-56 h-screen fixed left-0 top-0 transition-all duration-500 transform bg-black bg-opacity-10 backdrop-blur-lg shadow-2xl border border-white border-opacity-25 rounded-r-xl p-4">
+        class="open w-56 h-screen fixed left-0 top-0 transition-all duration-500 transform bg-black bg-opacity-10 backdrop-blur-lg shadow-2xl border border-white border-opacity-25 rounded-r-xl p-4">
         <h1 class="text-lg font-bold text-white mb-4 px-2">Menú</h1>
 
         <ul class="space-y-1">
@@ -170,6 +183,8 @@
             <button onclick="enviarMensaje()" id="send-button">Enviar</button>
         </div>
     </div>
+
 </body>
+
 <script src="js/chat.js"></script>
 <script src="js/sidebar.js"></script>

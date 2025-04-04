@@ -3,45 +3,81 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.text())
         .then(csvText => {
             const rows = csvText.split("\n").slice(1).map(row => row.split(","));
-            const indices = rows.map(row => row[0]);
-            const variaciones = rows.map(row => parseFloat(row[1]));
+            const indices = [], variaciones = [];
 
-            const ctx = document.getElementById("ipmChart").getContext("2d");
-            new Chart(ctx, {
-                type: "bar",
-                data: {
-                    labels: indices,
-                    datasets: [{
-                        label: "Variación Interanual (%)",
-                        data: variaciones,
-                        backgroundColor: ["#00B2FF", "#007ACC", "#4C6EF5"], // Colores alineados con el dashboard
-                        borderColor: "white",
-                        borderWidth: 1,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: { color: "white", callback: value => value + "%" },
-                            grid: { color: "rgba(255, 255, 255, 0.2)" }
-                        },
-                        x: {
-                            ticks: { color: "white" },
-                            grid: { color: "rgba(255, 255, 255, 0.2)" }
-                        }
-                    },
-                    plugins: {
-                        legend: { display: false },
-                        title: {
-                            display: true,
-                            text: "IPM - 2025 [%]",
-                            color: "white"
-                        }
-                    }
+            rows.forEach(([label, value]) => {
+                if (label && value) {
+                    indices.push(label.trim());
+                    variaciones.push(parseFloat(value));
                 }
             });
+
+            const chartDom = document.getElementById("ipmChart");
+            const ipmChart = echarts.init(chartDom);
+
+            const option = {
+                title: {
+                    text: "IPM - 2025 [%]",
+                    left: "center",
+                    textStyle: {
+                        color: "#ffffff",
+                        fontSize: 16
+                    }
+                },
+                tooltip: {
+                    trigger: "axis",
+                    axisPointer: {
+                        type: "shadow"
+                    },
+                    formatter: function (params) {
+                        return params.map(p => `${p.name}: ${p.value}%`).join("<br>");
+                    }
+                },
+                grid: {
+                    top: 60,
+                    left: "8%",
+                    right: "4%",
+                    bottom: "8%",
+                    containLabel: true
+                },
+                xAxis: {
+                    type: "category",
+                    data: indices,
+                    axisLabel: { color: "#ffffff" },
+                    axisLine: { lineStyle: { color: "#ffffff" } },
+                    splitLine: { show: false }
+                },
+                yAxis: {
+                    type: "value",
+                    axisLabel: {
+                        color: "#ffffff",
+                        formatter: "{value} %"
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: "rgba(255,255,255,0.2)"
+                        }
+                    }
+                },
+                series: [{
+                    type: "bar",
+                    data: variaciones,
+                    itemStyle: {
+                        color: function (params) {
+                            const colors = ["#00B2FF", "#007ACC", "#4C6EF5"];
+                            return colors[params.dataIndex % colors.length];
+                        },
+                        borderColor: "#ffffff",
+                        borderWidth: 1
+                    },
+                    barWidth: "50%"
+                }],
+                backgroundColor: "transparent"
+            };
+
+            ipmChart.setOption(option);
+            registerChart(ipmChart);
+            observeChartResize(ipmChart);
         })
-        .catch(error => console.error("Error al cargar los datos:", error));
+        .catch(error => console.error("Error al cargar los datos del IPM:", error));
 });

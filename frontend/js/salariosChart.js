@@ -3,74 +3,114 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.text())
         .then(csvText => {
             const rows = csvText.split("\n").slice(1).map(row => row.split(","));
-            const meses = rows.map(row => row[0]);
-            const privado = rows.map(row => parseFloat(row[1]));
-            const publico = rows.map(row => parseFloat(row[2]));
-            const noRegistrado = rows.map(row => parseFloat(row[3]));
-            const total = rows.map(row => parseFloat(row[4]));
-
-            const ctx = document.getElementById("salariosChart").getContext("2d");
-            new Chart(ctx, {
-                type: "line",
-                data: {
-                    labels: meses,
-                    datasets: [
-                        { 
-                            label: "Privado Registrado", 
-                            data: privado, 
-                            borderColor: "#00B2FF", // Celeste vibrante
-                            tension: 0.3,
-                            fill: false
-                        },
-                        { 
-                            label: "Sector Público", 
-                            data: publico, 
-                            borderColor: "#007ACC", // Azul medio
-                            tension: 0.3,
-                            fill: false
-                        },
-                        { 
-                            label: "Privado No Registrado", 
-                            data: noRegistrado, 
-                            borderColor: "#4C6EF5", // Azul intenso
-                            tension: 0.3,
-                            fill: false
-                        },
-                        { 
-                            label: "Total Índice de Salarios", 
-                            data: total, 
-                            borderColor: "#A3AED0", // Gris claro
-                            tension: 0.3,
-                            fill: false
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: { 
-                            beginAtZero: true, 
-                            ticks: { 
-                                color: "white",
-                                callback: function(value) { return value + "%"; } // Mostrar porcentaje
-                            },
-                            grid: { color: "rgba(255, 255, 255, 0.2)" } 
-                        },
-                        x: { 
-                            ticks: { color: "white" },
-                            grid: { color: "rgba(255, 255, 255, 0.2)" } 
-                        }
-                    },
-                    plugins: {
-                        legend: { labels: { color: "white" } },
-                        title: { 
-                            display: true, 
-                            text: "Variación Interanual del Índice de Salarios (2024) [%]", 
-                            color: "white" 
-                        }
-                    }
+            const meses = [];
+            const privado = [], publico = [], noRegistrado = [], total = [];
+            
+            rows.forEach(row => {
+                const [mes, p, pub, noReg, tot] = row.map(val => val?.trim());
+                if (mes) {
+                    meses.push(mes);
+                    privado.push(parseFloat(p) || null);
+                    publico.push(parseFloat(pub) || null);
+                    noRegistrado.push(parseFloat(noReg) || null);
+                    total.push(parseFloat(tot) || null); 
                 }
             });
+            const chartDom = document.getElementById("salariosChart");
+            const salariosChart = echarts.init(chartDom);
+
+            const option = {
+                title: {
+                    left: "center",
+                    textStyle: {
+                        color: "#ffffff",
+                        fontSize: 16
+                    }
+                },
+                tooltip: {
+                    trigger: "axis",
+                    formatter: function (params) {
+                        return params.map(p => `${p.marker} ${p.seriesName}: ${p.value}%`).join("<br>");
+                    }
+                },
+                legend: {
+                    top: 40,
+                    textStyle: {
+                        color: "#ffffff"
+                    }
+                },
+                grid: {
+                    top: 80,
+                    left: "8%",
+                    right: "4%",
+                    bottom: "8%",
+                    containLabel: true
+                },
+                xAxis: {
+                    type: "category",
+                    data: meses,
+                    axisLabel: { color: "#ffffff" },
+                    axisLine: { lineStyle: { color: "#ffffff" } },
+                    splitLine: { show: false }
+                },
+                yAxis: {
+                    type: "value",
+                    min: function (value) {
+                        return Math.floor(value.min * 0.50);
+                    },
+                    max: function (value) {
+                        return Math.ceil(value.max * 1.05);
+                    },
+                    axisLabel: {
+                        color: "#ffffff",
+                        formatter: "{value} %"
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: "rgba(255,255,255,0.2)"
+                        }
+                    }
+                },
+                series: [
+                    {
+                        name: "Privado Registrado",
+                        type: "line",
+                        data: privado,
+                        smooth: true,
+                        lineStyle: { color: "#00B2FF", width: 2 }
+                    },
+                    {
+                        name: "Sector Público",
+                        type: "line",
+                        data: publico,
+                        smooth: true,
+                        lineStyle: { color: "#007ACC", width: 2 }
+                    },
+                    {
+                        name: "Privado No Registrado",
+                        type: "line",
+                        data: noRegistrado,
+                        smooth: true,
+                        lineStyle: { color: "#4C6EF5", width: 2 }
+                    },
+                    {
+                        name: "Total Índice de Salarios",
+                        type: "line",
+                        data: total,
+                        smooth: true,
+                        lineStyle: { color: "#A3AED0", width: 2 }
+                    }
+                ],
+                backgroundColor: "transparent"
+            };
+
+            // Asegura render correcto dentro de GridStack
+            setTimeout(() => {
+                salariosChart.setOption(option);
+                salariosChart.resize(); // Forzar ajuste si contenedor fue redimensionado
+                registerChart(salariosChart);
+                observeChartResize(salariosChart);
+            }, 50);
         })
-        .catch(error => console.error("Error al cargar los datos:", error));
+        .catch(error => console.error("Error al cargar los datos de salarios:", error));
 });

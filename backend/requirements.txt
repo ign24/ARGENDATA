@@ -2,3 +2,5 @@ fastapi
 uvicorn
 openai
 numpy
+mangum
+google-generativeai

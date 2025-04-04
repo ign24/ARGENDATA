@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=IBM+Plex+Sans:wght@400;600&display=swap');
 
+
+
+/* ------------------------------------📌 LOADER-----------------------------------------------*/
+
 @keyframes loading {
     0% {
         opacity: 0.35;
@@ -18,6 +22,7 @@
         filter: blur(0px);
         transform: scale(1);
     }
+
     100% {
         opacity: 0;
         filter: blur(10px);
@@ -42,16 +47,45 @@
     animation: loading 0ms -800ms linear infinite alternate;
 }
 
-.loader-bars li:nth-child(1) { animation-duration: 405ms; }
-.loader-bars li:nth-child(2) { animation-duration: 477ms; }
-.loader-bars li:nth-child(3) { animation-duration: 456ms; }
-.loader-bars li:nth-child(4) { animation-duration: 402ms; }
-.loader-bars li:nth-child(5) { animation-duration: 472ms; }
-.loader-bars li:nth-child(6) { animation-duration: 452ms; }
-.loader-bars li:nth-child(7) { animation-duration: 415ms; }
-.loader-bars li:nth-child(8) { animation-duration: 456ms; }
-.loader-bars li:nth-child(9) { animation-duration: 497ms; }
-.loader-bars li:nth-child(10) { animation-duration: 440ms; }
+.loader-bars li:nth-child(1) {
+    animation-duration: 405ms;
+}
+
+.loader-bars li:nth-child(2) {
+    animation-duration: 477ms;
+}
+
+.loader-bars li:nth-child(3) {
+    animation-duration: 456ms;
+}
+
+.loader-bars li:nth-child(4) {
+    animation-duration: 402ms;
+}
+
+.loader-bars li:nth-child(5) {
+    animation-duration: 472ms;
+}
+
+.loader-bars li:nth-child(6) {
+    animation-duration: 452ms;
+}
+
+.loader-bars li:nth-child(7) {
+    animation-duration: 415ms;
+}
+
+.loader-bars li:nth-child(8) {
+    animation-duration: 456ms;
+}
+
+.loader-bars li:nth-child(9) {
+    animation-duration: 497ms;
+}
+
+.loader-bars li:nth-child(10) {
+    animation-duration: 440ms;
+}
 
 #loader {
     transition: opacity 1s ease-out, transform 0.8s ease-in-out;
@@ -89,6 +123,7 @@
     0% {
         transform: translateX(100%);
     }
+
     100% {
         transform: translateX(-100%);
     }
@@ -96,25 +131,30 @@
 
 /* Ajuste del contenido principal para evitar que quede oculto */
 body {
-    padding-top: 15px; /* Ajuste para header (60px) + ticker (40px aprox.) */
+    padding-top: 15px;
+    /* Ajuste para header (60px) + ticker (40px aprox.) */
 }
+
 @keyframes borderGlow {
     0% {
         border-image-source: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.7), transparent);
     }
+
     50% {
         border-image-source: linear-gradient(90deg, rgba(0, 255, 255, 0.7), transparent, rgba(0, 255, 255, 0.7));
     }
+
     100% {
         border-image-source: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.7), transparent);
     }
 }
 
-/* ------------------------------------📌 Header con efecto vidrio y borde luminoso -----------------------------------------------*/
+
+/* ------------------------------------📌 Header ------------------------------------------------------*/
 header {
     position: fixed;
     background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(12px); /* 🔥 Más desenfoque */
+    backdrop-filter: blur(12px);
     border-radius: 6px;
     padding: 8px 12px;
     top: 0;
@@ -125,19 +165,52 @@ header {
     align-items: center;
     justify-content: space-between;
     z-index: 100;
-    overflow: hidden; /* Evita que el brillo sobresalga */
+    overflow: visible;
     border-width: 1px;
     border-style: solid;
     border-image-slice: 1;
     animation: borderGlow 3s infinite ease-in-out;
 }
 
-/* 📌 Responsive: Oculta la barra de búsqueda en móviles */
+/* 📌 Oculta la barra de búsqueda en móviles */
 @media (max-width: 640px) {
     .hidden.sm\\:block {
         display: none;
     }
 }
+
+/* ------------------------------------📌 LOGO REDONDO CON HALO Y AURA ----------------------------------------------- */
+.logo-3d-glass {
+    position: relative;
+    display: inline-block;
+    border-radius: 9999px;
+    perspective: 600px;
+    transform-style: preserve-3d;
+    transition: transform 0.2s ease;
+    z-index: 10;
+    overflow: hidden;
+    will-change: transform;
+  }
+  
+  /* Glow/reflejo controlado */
+  .logo-3d-glass::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.08), transparent 60%);
+    filter: blur(10px);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+  }
+  
+  .logo-3d-glass:hover::after {
+    opacity: 1;
+  }
+  
+
 
 /* ------------------------------------📌 BODY -----------------------------------------------*/
 
@@ -147,24 +220,19 @@ body {
     background-attachment: fixed;
     color: #f1f1f1;
     font-family: 'Roboto', sans-serif;
-    display: flex;
-    justify-content: center;
+    display: block;
+    justify-content: flex-start;
     align-items: center;
     min-height: 100vh;
     margin: 0;
+    margin-top: 50px;
     width: 100%;
+    overflow-x: hidden;
 }
 
 /* 🔹 Asegurar que los elementos internos ocupen todo el ancho */
-.container, #dynamic-loader-container {
-    width: 100%;
-}
-
-/* 🔹 Ajuste especial para secciones con grids */
-.ipc-container, .contenedor-graficos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Se ajusta automáticamente */
-    gap: 20px;
+.container,
+#dynamic-loader-container {
     width: 100%;
 }
 
@@ -174,7 +242,7 @@ h2,
 h3 {
     font-family: 'Inter', sans-serif;
     font-weight: 250;
-    font-size:medium;
+    font-size: medium;
     padding: 0.1rem;
     font-family: 'IBM Plex Sans', sans-serif;
 }
@@ -184,22 +252,47 @@ h4,
 h5,
 h6 {
     font-family: 'Roboto', sans-serif;
-    font-weight:normal;
+    font-weight: normal;
     font-size: 1rem;
     color: #b0c7d1;
 }
 
-/* 📌 Contenedor principal centrado */
-.container {
-    width: 100%;
-    max-width: auto;
+/* ------------------------------------📌 CONTENEDOR PRINCIPAL -----------------------------------------------*/
+#main-wrapper {
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(0);
+    width: calc(100% - 50px);
+    padding-left: 30px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    /* Mantiene alineación con las tarjetas */
-    margin: auto;
-    /* Centra todos los textos */
     justify-content: flex-start;
+}
+
+
+#main-wrapper {
+    transition: margin-left 0.3s ease-in-out;
+    margin-left: 0;
+    width: calc(100% - 0px);
+}
+
+#main-wrapper.with-sidebar {
+    margin-left: 16rem;
+    /* mismo ancho que el sidebar */
+    width: calc(100% - 16rem);
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0;
+    padding: 0 1rem;
+    display: block;
+    align-items: flex-start;
+}
+
+.glass-hover {
+    border-radius: 3px;
+    transition: background-image 0.2s ease;
+    backdrop-filter: blur(15px);
 }
 
 /* ------------------------------------📌 TÍTULO -----------------------------------------------*/
@@ -220,7 +313,66 @@ h6 {
     text-shadow: 2px 2px 10px rgba(0, 200, 255, 0.1);
     justify-content: flex-start;
 }
-/* ------------------------------------📌 TARJETAS -----------------------------------------------*/
+
+/* ------------------------------------📌SIDEBAR -----------------------------------------------*/
+
+
+/* 📌 Sidebar con efecto vidrio */
+#sidebar {
+    background: rgba(0, 0, 0, 0.288);
+    /* 🔥 Más transparencia */
+    backdrop-filter: blur(15px);
+    /* 🔥 Más desenfoque */
+    position: fixed;
+    top: 60px;
+    left: -16rem;
+    width: 16rem;
+    height: calc(100vh - 60px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    z-index: 50;
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.3);
+    transition: left 0.3s ease-in-out;
+    align-items: center;
+}
+
+/* 📌 Cuando el sidebar está abierto */
+#sidebar.open {
+    left: 0;
+}
+
+#toggleBtn {
+    color: white;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#toggleBtn:hover {
+    background: rgba(255, 255, 255, 0.089);
+    transform: scale(1);
+}
+
+/* ------------------------------------📌 DASHBOARD -----------------------------------------------*/
+/* 🔹 Icono de dólar*/
+.icon {
+    width: 28px;
+    height: 28px;
+    stroke: #00c8ff;
+    /* Color celeste brillante */
+}
+
+#tarjetas-dolares {
+    display: flex;
+    flex-wrap: wrap;
+    /* Permite que las tarjetas se adapten al tamaño del contenedor */
+    gap: 10px;
+    align-items: stretch;
+    /* Asegura que todas las tarjetas tengan la misma altura */
+    margin-bottom: 16px;
+}
+
 .tarjeta-dolar {
     display: flex;
     flex-direction: column;
@@ -236,18 +388,19 @@ h6 {
     min-width: 160px;
     position: relative;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    transform: translateY(20px) scale(0.95);
+    transform: translateY(20px) scale(0.95)
 }
 
 /* 📌 Barra luminosa a la derecha */
 .tarjeta-dolar::after {
     content: "";
-    width: 6px; /* Grosor de la barra */
+    width: 6px;
+    /* Grosor de la barra */
     height: 98%;
     background: linear-gradient(to top, transparent, #00c8ff, transparent);
     position: absolute;
-    bottom:0;
-    right:0;
+    bottom: 0;
+    right: 0;
     border-right: 100%;
     opacity: 0.8;
 }
@@ -295,6 +448,7 @@ a {
 }
 
 #tarjetas-dolares {
+    margin-top: 20px;
     gap: 10px;
     display: flex;
     justify-content: flex-start;
@@ -335,389 +489,113 @@ a:hover {
 }
 
 
-/* 📌 Ajustes Responsivos */
-@media (max-width: 768px) {
-    .container {
-        width: 95%;
-    }
-}
+/* ------------------------------------📌GRIDSTACK -----------------------------------------------*/
 
-
-
-/* ------------------------------------📌SIDEBAR -----------------------------------------------*/
-
-
-
-
-/* 📌 Sidebar con efecto vidrio */
-#sidebar {
-    background: rgba(0, 0, 0, 0.288);
-    /* 🔥 Más transparencia */
-    backdrop-filter: blur(15px);
-    /* 🔥 Más desenfoque */
-    position: fixed;
-    top: 60px;
-    left: -16rem;
-    width: 16rem;
-    height: calc(100vh - 60px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    z-index: 50;
-    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.3);
-    transition: left 0.3s ease-in-out;
-    align-items: center;
-}
-
-/* 📌 Cuando el sidebar está abierto */
-#sidebar.open {
-    left: 0;
-}
-
-#toggleBtn {
-    color: white;
-    padding: 8px 12px;
-    font-size: 0.8rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-#toggleBtn:hover {
-    background: rgba(255, 255, 255, 0.089);
-    transform: scale(1);
-}
-/* ------------------------------------📌DASHBOARD -----------------------------------------------*/
-
-
-/* 📌 TARJETA IPC */
-.tarjeta-ipc {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 1.2rem;
-    border-radius: 12px;
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    text-align: left;
-    gap: 1rem;
-    z-index: 5;
-    min-width: 400px; /* Evita que se colapsen en pantallas grandes */
+.grid-stack {
     width: 100%;
-    /* Se expande completamente */
-    max-width: 800px;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    transform: translateY(20px) scale(0.95);
-    max-height: fit-content;
-}
-
-/* 📌 Hover animado */
-.tarjeta-ipc:hover {
-    box-shadow: 0 2px 3px #00c8ff;
-}
-
-/* 📌 Título del IPC */
-.tarjeta-ipc h3 {
-    padding: 0.1rem;
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #00c8ff;
-    text-align: center;
-}
-
-/* 📌 Valor del IPC */
-.tarjeta-ipc p {
-    font-size: 1rem;
-    color: #ffffff;
-    text-align: right;
-}
-
-/* 📌 Ajuste responsivo */
-@media (max-width: 768px) {
-    #tarjeta-ipc {
-        max-width: 100%;
-        width: auto;
-    }
-}
-
-/* 📌 Contenedor de los gráficos */
-.ipc-container {
-    display: flex;
-    gap: 20px;
-    margin-top: 10px;
-    justify-content: flex-start;
-    overflow-x: auto;
-    flex-wrap: wrap;
-    width: calc(100% + 16px);
-    overflow: visible;
-}
-
-/* 📊 GRÁFICO DE DONA*/
-.tarjeta-deuda {
-    backdrop-filter: blur(10px);
-    padding: 5px;
-    border-radius: 12px;
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    transform: translateY(20px) scale(0.95);
-    width: 400px;
-    max-height: 550px;
-    overflow: hidden;
-}
-/* 📌 Estilos para el título alineado a la izquierda */
-.tarjeta-header {
-    width: 100%;
-    margin-left: 10px;
-    margin-top:10px;
-    text-align: center;
-}
-
-/* 📌 Hover animado */
-.tarjeta-deuda:hover {
-    box-shadow: 0 2px 3px #00c8ff;
-}
-
-.tarjeta-header h3 {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #00c8ff;
-    align-items: center;
-}
-/* 📌 Estilos para el total de la deuda */
-.total-deuda-text {
-    font-size: 1rem;
-    color: #ffffff;
-    margin-top: 5px;
-    margin-left: 5px;
-}
-
-/* 📌 Contenedor de los labels debajo del gráfico */
-.deuda-labels {
-    display: flex;
-    align-items: center;
-    width: 100%;
+    height: 100%;
     gap: 10px;
 }
 
-@media (max-width: 600px) {
-    .ipc-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-}
-/* 🔹 Estilos para la sección con icono */
-.section-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px; /* Espaciado entre el icono y el texto */
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #b0c7d1;
-    margin-bottom: 1rem;
+.grid-stack .grid-stack-item {
+    margin-bottom: 24px !important;
+    /* Fuerza margen entre filas */
 }
 
-/* 🔹 Icono de dólar*/
-.icon {
-    width: 28px;
-    height: 28px;
-    stroke: #00c8ff; /* Color celeste brillante */
-}
-
-/* 🔹 Separador con efecto moderno */
-.separator {
-    width: 50%;
-    height: 3px;
-    margin: 10px auto;
-    background: linear-gradient(to right, transparent, white, transparent);
-    border-radius: 2px;
-}
-
-/* 📌 Tarjeta PIB */
-#tarjeta-pib {
+.grid-stack-item-content {
+    width: 100%;
+    height: 100%;
+    min-height: 800px;
+    /* o el valor que prefieras */
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 1.2rem;
-    border-radius: 12px;
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    transform: translateY(20px) scale(0.95);
-    gap: 1rem;
-    z-index: 5;
-    max-width: 400px;
+    box-sizing: border-box;
+    object-fit: contain;
+    position: relative;
+    /* necesario para el ícono ::after */
 }
 
-/* 📌 Hover animado */
-#tarjeta-pib:hover {
-    box-shadow: 0 2px 3px #00c8ff;
+/* 🔹 Indicador visual elegante con imagen (resizer) */
+.grid-stack-item-content::after {
+    content: "";
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    width: 16px;
+    height: 16px;
+    background-image: url("../assets/img/corner.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.2s ease-in-out, transform 0.3s ease-in-out;
 }
 
-/* Icono macroeconomicos */
-.size-6 {
-    stroke: #00c8ff; /* Cyan brillante */
+.grid-stack-item-content:hover::after {
+    opacity: 1;
+    transform: scale(1);
 }
 
-/* 📌 Tarjeta EMAE */
-#tarjeta-emae {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1.2rem;
-    border-radius: 12px;
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    transform: translateY(20px) scale(0.95);
-    gap: 1rem;
-    z-index: 5;
-    width: 100%;
-    max-width: 900px;
-}
-/* 📌 Hover animado */
-#tarjeta-emae:hover {
-    box-shadow: 0 2px 3px #00c8ff;
+/* 🔹 Ocultar los handles visibles por defecto */
+.grid-stack-item .ui-resizable-n,
+.grid-stack-item .ui-resizable-e,
+.grid-stack-item .ui-resizable-s,
+.grid-stack-item .ui-resizable-w,
+.grid-stack-item .ui-resizable-ne,
+.grid-stack-item .ui-resizable-nw {
+    display: none !important;
 }
 
-#emaeChart {
-    width: 100% !important;
-    height: auto !important;
-    min-height: 250px;
-    max-height: 600px;
+/* 🔹 Handles de redimensionamiento hacia adentro (más elegantes) */
+.grid-stack-item .ui-resizable-handle {
+    width: 14px;
+    height: 14px;
+    background: transparent;
+    position: absolute;
+    z-index: 10;
 }
 
-/* 📌 Contenedor de gráficos en fila */
-.contenedor-graficos {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 20px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    width: 100%;
-    max-width: 100%;
-    flex-wrap: wrap; /* Permite que los gráficos se adapten en pantallas pequeñas */
+/* 🔹 Ajustes por dirección */
+
+.grid-stack-item .ui-resizable-e {
+    right: 6px;
+    /* entra 6px desde el borde */
+    top: 0;
+    bottom: 0;
+    cursor: ew-resize;
 }
 
-/* 📌 Ajuste para las tarjetas de gráficos */
-#tarjeta-pib, #tarjeta-emae {
-    flex: 1;
-    min-width: 500px;
-    max-width: 48%;
-}
-/* 📌 Responsivo: en pantallas pequeñas, los gráficos se apilan */
-@media (max-width: 768px) {
-    .contenedor-graficos {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    #tarjeta-pib, #tarjeta-emae {
-        max-width: 100%;
-    }
+.grid-stack-item .ui-resizable-w {
+    left: 6px;
+    top: 0;
+    bottom: 0;
+    cursor: ew-resize;
 }
 
-/* 📌 Ajuste automático para el canvas para evitar pixelado y desbordes */
-#graficoCrecimiento {
-    width: 100% !important;
-    height: auto !important;
-    max-height: 400px;      /* Limitar la altura para mantener consistencia */
-    max-width: 800px;       /* Alinear con los demás gráficos */
-    text-align: center;
-}
-/* 📌 Hover animado */
-.tarjeta-crecimiento:hover {
-    box-shadow: 0 2px 3px #00c8ff;
+.grid-stack-item .ui-resizable-s {
+    bottom: 6px;
+    left: 0;
+    right: 0;
+    cursor: ns-resize;
 }
 
-/* 🔹 Ajustes generales para pantallas pequeñas */
-@media (max-width: 1024px) {
-    body {
-        padding: 20px;
-    }
-
-    #sectores-container, .dashboard-container {
-        max-width: 95%;
-        padding: 1.5rem;
-    }
-
-    .tabs {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        display: flex;
-        gap: 10px;
-    }
-
-    .tab-button {
-        white-space: nowrap;
-        padding: 10px 15px;
-    }
-
-    /* Ajuste para tablas y gráficos */
-    .ipc-container, .contenedor-graficos {
-        flex-direction: column;
-        align-items: center;
-    }
+/* 📌 Handle SE */
+.grid-stack-item .ui-resizable-se {
+    width: 20px;
+    height: 20px;
+    bottom: 8px;
+    right: 8px;
+    cursor: nwse-resize;
+    background: transparent;
+    position: absolute;
+    z-index: 20;
+    /* encima de todo */
 }
 
-/* 🔹 Ajustes específicos para pantallas menores a 768px (móviles) */
-@media (max-width: 768px) {
-    /* Reducir margen y padding en contenedores principales */
-    body {
-        padding: 10px;
-    }
 
-    #sectores-container, .dashboard-container {
-        padding: 1rem;
-    }
-
-    /* Ajustar fuentes para mejor legibilidad */
-    .title {
-        font-size: 1.6rem;
-    }
-
-    .tab-button {
-        font-size: 0.9rem;
-        padding: 8px 12px;
-    }
-
-    /* Sidebar oculto por defecto en móviles */
-    #sidebar {
-        left: -100%;
-        width: 75%;
-        max-width: 280px;
-    }
-
-    #sidebar.open {
-        left: 0;
-    }
-
-    /* Ajustar el chat en móviles */
-    #chat-container {
-        width: 90%;
-        height: 80%;
-        bottom: 10px;
-        right: 5%;
-    }
-
-    /* Ajustar los gráficos */
-    canvas {
-        max-width: 100%;
-        height: auto !important;
-    }
-}
+/* ------------------------------------📌DASHBOARD PERSONALIZABLE -----------------------------------------------*/
 
 /* 📌 Botón de Generar Reporte */
 .btn-reporte {
@@ -751,7 +629,7 @@ a:hover {
 /* 📌 Contenedor derecho (Botón + Noticias) */
 #contenedor-derecho {
     position: absolute;
-    top: 80px;
+    top: 20px;
     right: 20px;
     width: 300px;
     display: flex;
@@ -788,6 +666,59 @@ a:hover {
     border-radius: 6px;
     background: rgba(255, 255, 255, 0.1);
 }
+.tarjeta {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 1.2rem;
+    border-radius: 12px;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    text-align: left;
+    gap: 1rem;
+    z-index: 5;
+
+    width: 100%;
+    height: 100%;
+    min-width: 300px;
+    min-height: 250px;
+
+    transition: box-shadow 0.3s ease-in-out;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.tarjeta h3 {
+    padding: 0.1rem;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: clamp(0.5rem, 1.5vw, 1.2rem);
+    font-weight: 600;
+    color: #00c8ff;
+    text-align: center;
+}
+
+.tarjeta p {
+    color: #ffffff;
+    text-align: center;
+}
+
+.tarjeta canvas {
+    flex-shrink: 1;
+    flex-grow: 1;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0;
+    display: block;
+}
+
+#salariosChart {
+    width: 100%;
+    height: 100%;
+    min-height: 250px;
+}
+
 
 #salariosChart {
     width: 100% !important;
@@ -801,11 +732,13 @@ a:hover {
 /* 📌 Tarjeta de commodities con efecto metálico mejorado */
 .commodities-card {
     position: fixed;
-    right: 20px; /* 📌 Ubicación fija a la derecha */
-    top: 300px;  /* 📌 Se mantiene en su posición */
+    right: 20px;
+    /* 📌 Ubicación fija a la derecha */
+    top: 300px;
+    /* 📌 Se mantiene en su posición */
     width: 300px;
     height: 400px;
-    background: linear-gradient(to bottom right, #000000, #0a0e18, #1e293b);
+    background: linear-gradient(to bottom right, #0000006c, #0a0e1870, #1e293b86);
     backdrop-filter: blur(14px);
     border-radius: 12px;
     padding: 10px;
@@ -814,8 +747,10 @@ a:hover {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    z-index: 40; /* 📌 Eleva la tarjeta por encima de los demás elementos */
+    z-index: 40;
+    /* 📌 Eleva la tarjeta por encima de los demás elementos */
 }
+
 /* 📌 Pseudo-elemento para el reflejo metálico ultra realista con movimiento */
 .commodities-card::after {
     content: "";
@@ -824,18 +759,17 @@ a:hover {
     left: -170%;
     width: 250%;
     height: 250%;
-    background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.507) 15%,
-        rgba(180, 220, 255, 0.24) 40%,
-        rgba(255, 255, 255, 0.1) 100%
-    );
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.507) 15%,
+            rgba(180, 220, 255, 0.24) 40%,
+            rgba(255, 255, 255, 0.1) 100%);
     transform: rotate(45deg);
     animation: var(--animation-trigger, metallicLoop 7s ease-in forwards);
     pointer-events: none;
     opacity: 0.2;
     filter: blur(5px);
 }
+
 /* 📌 Animación del brillo con movimiento realista */
 @keyframes metallicLoop {
     0% {
@@ -845,21 +779,26 @@ a:hover {
         opacity: 0;
         filter: blur(10px);
     }
+
     20% {
         opacity: 0.2;
         filter: blur(8px);
     }
+
     50% {
         top: 50%;
         left: 50%;
-        transform: rotate(47deg) scale(1.02); /* 🔹 Leve cambio en la rotación y escala */
+        transform: rotate(47deg) scale(1.02);
+        /* 🔹 Leve cambio en la rotación y escala */
         opacity: 0.35;
         filter: blur(5px);
     }
+
     80% {
         opacity: 0.2;
         filter: blur(8px);
     }
+
     100% {
         top: 150%;
         left: 170%;
@@ -869,7 +808,7 @@ a:hover {
     }
 }
 
-/* 📌 Título más compacto */
+/* 📌 Título */
 .commodities-card h3 {
     font-size: 0.9rem;
     font-weight: bold;
@@ -886,7 +825,7 @@ a:hover {
     font-size: 0.7rem;
 }
 
-/* 📌 Encabezados más delgados */
+/* 📌 Encabezados  */
 .commodities-table th {
     background: rgba(255, 255, 255, 0.12);
     padding: 4px;
@@ -902,9 +841,9 @@ a:hover {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* 📌 Filas con menor altura */
+/* 📌 Filas */
 .commodities-table tr {
-    height: 20px;
+    height: 10px;
 }
 
 /* 📌 Colores de variación de precio */
@@ -918,73 +857,150 @@ a:hover {
     font-weight: bold;
 }
 
-
-/* 📌 Reducir altura de las filas */
-.commodities-table tr {
-    height: 16px !important;
-}
-
-/* 📌 Reducir padding y tamaño de fuente */
-.commodities-table td, .commodities-table th {
-    font-size: 0.6rem !important;
-    padding: 2px !important;
-}
-
-/* 📌 Asegurar visibilidad */
-.commodities-table td {
-    overflow: visible !important;
-}
 /* 📌 Ajustar tamaño solo para los gráficos de la tabla de commodities */
 .commodities-table canvas {
-    width: 50px;  /* Tamaño pequeño pero sin deformar */
+    width: 20px;
+    /* Tamaño pequeño pero sin deformar */
     height: 20px;
     display: block;
     margin: auto;
 }
 
-/* 📌 Reducir altura de filas para que entren todos los datos */
-.commodities-table tr {
-    height: 18px; /* Ajuste para mejor compactación */
+/*------------------------------- 📌 Modo claro ------------------------------------*/
+.modo-claro {
+    background: linear-gradient(to bottom, #fff8e1 0%, #dff4ff 50%, #c2e9fb 100%);
+    background-attachment: fixed;
+    color: #111;
 }
 
-/* 📌 Ajustar celdas para mantener todo ordenado */
-.commodities-table td, .commodities-table th {
-    font-size: 0.7rem; /* Tamaño más compacto sin perder legibilidad */
-    padding: 3px;
-    text-align: center;
+.modo-claro #sidebar,
+.modo-claro header {
+    background: rgba(255, 255, 255, 0.116);
+    color: #111;
+    border-color: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
 }
 
-/* 📌-------------------------------------------------------- Drag and drop ------------------------------------------------------------------*/
-
-/* 🔹 Tarjeta seleccionada */
-.seleccionada {
-    background: rgba(0, 255, 255, 0.11);
+.modo-claro h1,
+.modo-claro h2,
+.modo-claro h3 {
+    color: #03517a;
+    /* Azul oscuro con carácter */
 }
 
-/* 🔹 Efecto cuando una tarjeta está en movimiento */
-.drag-en-movimiento {
-    opacity: 0.7;
-    transform: rotate(3deg);
+.modo-claro h4,
+.modo-claro h5,
+.modo-claro h6 {
+    color: #222;
+    /* Gris bien oscuro */
 }
 
-/* 🔹 Tarjeta mientras se arrastra */
-.dragging {
+
+.modo-claro a {
+    color: #0077b6;
+}
+
+
+.modo-claro .dashboard-title {
+    background: linear-gradient(to right, #f9d976, #f39f86, #56ccf2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.modo-claro .tarjeta p,
+.modo-claro .tarjeta-dolar p,
+.modo-claro .tarjeta-noticias,
+.modo-claro .noticia-item,
+.modo-claro #chat-box,
+.modo-claro textarea,
+.modo-claro input {
+    color: #222;
+}
+
+.modo-claro .commodities-card {
+    background: linear-gradient(to bottom right, #ffffff5e, #f5fbff6b, #d1ecf92c);
+    color: #222;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05), 0 4px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.modo-claro .commodities-card::after {
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.6) 15%,
+            rgba(200, 230, 255, 0.3) 40%,
+            rgba(255, 255, 255, 0.1) 100%);
+    opacity: 0.25;
+}
+
+/* 📌 Fondo aurora animado para modo claro */
+.modo-claro::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background: radial-gradient(ellipse at top, #fff8e1 0%, #dff4ff 40%, #c2e9fb 100%);
+    opacity: 0.85;
+    z-index: -2;
+}
+
+.modo-claro::after {
+    content: "";
+    position: fixed;
+    top: -20%;
+    left: -20%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(130deg, rgba(255, 255, 255, 0.3), rgba(3, 81, 122, 0.1), rgba(255, 255, 255, 0.1));
+    animation: aurora 20s ease-in-out infinite;
+    z-index: -1;
     opacity: 0.2;
-    transition: transform 0.2s ease-in-out;
+    pointer-events: none;
+    filter: blur(60px);
 }
 
-/* 📌 Contenedor Principal */
-.dashboard-container {
-    max-width: fit-content; /* 📏 Controla el ancho total */
-    margin: auto;
-    display: flex;
-    flex-direction: column;
+/* Animación suave de aurora */
+@keyframes aurora {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    50% {
+        transform: translate(10%, -10%) rotate(5deg);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
 }
-/* 📌-------------------------------------------------------- CONTENEDOR MAIN------------------------------------------------------------------*/
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    padding: 20px; /* 📌 Mantiene coherencia en la estructura */
-    justify-content: flex-start; /* 📌 Alinea todo a la izquierda */
-    text-align: center;
+
+
+/*------------------------------- 📌 Modo LITE ------------------------------------*/
+/* 💨 Desactiva TODAS las animaciones, brillos, efectos, transformaciones */
+body.modo-lite *,
+body.modo-lite *::before,
+body.modo-lite *::after {
+    animation: none !important;
+    transition: none !important;
+    background-image: none !important;
+    transform: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+}
+
+/* 💨 Remueve gradientes interactivos */
+body.modo-lite .glass-hover,
+body.modo-lite .tarjeta,
+body.modo-lite .tarjeta-dolar,
+body.modo-lite .commodities-card {
+    backdrop-filter: none !important;
+    background: rgba(20, 20, 20, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 💨 Oculta pseudoanimaciones (ej. brillo metálico) */
+body.modo-lite .commodities-card::after {
+    display: none !important;
 }

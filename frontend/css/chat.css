@@ -5,7 +5,8 @@
     right: 20px;
     width: 350px;
     height: 500px;
-    background: rgba(0, 0, 0, 0.288); /* 🔥 Efecto glass */
+    background: rgba(0, 0, 0, 0.288);
+    /* 🔥 Efecto glass */
     backdrop-filter: blur(12px);
     color: white;
     border-radius: 15px;
@@ -37,10 +38,13 @@
     border-top-right-radius: 15px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
+
 .chat-header h3 {
-    font-size: 1rem; /* Reducir tamaño */
-    font-weight: bold; /* Ajustar peso */
-    color:azure;
+    font-size: 1rem;
+    /* Reducir tamaño */
+    font-weight: bold;
+    /* Ajustar peso */
+    color: azure;
 }
 
 /* 📌 Botón de cierre */
@@ -69,30 +73,30 @@
 
 /* 📌 Mensajes de usuario */
 .user {
-    align-self: flex-end;
-    background: linear-gradient(135deg, #4c82e7, #3456b1);
-    color: white;
-    padding: 10px 14px;
-    border-radius: 12px;
+    margin-left: auto;
+    background-color: #2563eb;
+    color: #f9fafb;
+    padding: 10px 16px;
+    border-radius: 18px 18px 0 18px;
     max-width: 70%;
-    font-size: 14px;
-    word-wrap: break-word;
-    text-align: right;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    font-size: 15px;
+    white-space: pre-wrap;
+    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+    animation: fadeIn 0.2s ease-in;
 }
 
-/* 📌 Mensajes de la IA */
+/* Mensaje del bot (izquierda) */
 .bot {
-    align-self: flex-start;
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    padding: 10px 14px;
-    border-radius: 12px;
-    max-width: 70%;
-    font-size: 14px;
-    word-wrap: break-word;
-    text-align: left;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin-right: auto;
+    background-color: #1f2937;
+    color: #f3f4f6;
+    padding: 10px 16px;
+    border-radius: 18px 18px 18px 0;
+    max-width: 100%;
+    font-size: 15px;
+    white-space: pre-wrap;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.2s ease-in;
 }
 
 /* 📌 Contenedor del input */
@@ -182,6 +186,7 @@
     justify-content: space-between;
     align-items: center;
 }
+
 .chat-btn {
     background: none;
     border: none;
@@ -195,48 +200,103 @@
 .chat-btn:hover {
     color: #ff7b7b;
 }
+
 /* 📌 Animación de "Carga de Energía" */
 @keyframes energyPulse {
-    0% { transform: scale(1); box-shadow: 0 0 6px rgba(0, 255, 255, 0.3); }
-    20% { transform: scale(1.1); box-shadow: 0 0 14px rgba(0, 255, 255, 0.6); }
-    50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(0, 255, 255, 0.8); }
-    80% { transform: scale(1.08); box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
-    100% { transform: scale(1); box-shadow: 0 0 4px rgba(0, 255, 255, 0.2); }
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 6px rgba(0, 255, 255, 0.3);
+    }
+
+    20% {
+        transform: scale(1.1);
+        box-shadow: 0 0 14px rgba(0, 255, 255, 0.6);
+    }
+
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+    }
+
+    80% {
+        transform: scale(1.08);
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 4px rgba(0, 255, 255, 0.2);
+    }
 }
 
 /* 📌 Animación de "Fluctuación de Energía" */
 @keyframes glitchEffect {
-    0% { filter: hue-rotate(0deg) blur(0px); }
-    25% { filter: hue-rotate(30deg) blur(1px); }
-    50% { filter: hue-rotate(-20deg) blur(0px); }
-    75% { filter: hue-rotate(10deg) blur(1px); }
-    100% { filter: hue-rotate(0deg) blur(0px); }
+    0% {
+        filter: hue-rotate(0deg) blur(0px);
+    }
+
+    25% {
+        filter: hue-rotate(30deg) blur(1px);
+    }
+
+    50% {
+        filter: hue-rotate(-20deg) blur(0px);
+    }
+
+    75% {
+        filter: hue-rotate(10deg) blur(1px);
+    }
+
+    100% {
+        filter: hue-rotate(0deg) blur(0px);
+    }
 }
 
 /* 📌 Animación de "Elevación Antigravedad" */
 @keyframes levitate {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
 }
 
 /* 📌 Aplicar la animación futurista */
 #chat-button.notify {
-    animation: energyPulse 7s ease-in-out 1, 
-               glitchEffect 4s ease-in-out 2, 
-               levitate 3s ease-in-out infinite alternate;
+    animation: energyPulse 7s ease-in-out 1,
+        glitchEffect 4s ease-in-out 2,
+        levitate 3s ease-in-out infinite alternate;
 }
 
 
 /* 📌 Animación de aparición con deslizamiento */
 @keyframes slideInFade {
-    0% { opacity: 0; transform: translateY(20px) scale(0.95); }
-    100% { opacity: 1; transform: translateY(0) scale(1); }
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 /* 📌 Animación de salida con desvanecimiento */
 @keyframes fadeOut {
-    0% { opacity: 1; transform: translateY(0) scale(1); }
-    100% { opacity: 0; transform: translateY(20px) scale(0.95); }
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
 }
 
 /* 📌 Estilos para el cuadro del personaje */
@@ -247,14 +307,16 @@
     display: flex;
     align-items: center;
     background: linear-gradient(to right, #3fcfe831, #03507a44);
-    backdrop-filter: blur(15px); /* Efecto desenfoque */
+    backdrop-filter: blur(15px);
+    /* Efecto desenfoque */
     border-radius: 15px;
     padding: 5px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.123);
     transition: opacity 0.5s ease-in-out, transform 0.3s ease-in-out;
     opacity: 0;
     transform: translateY(10px);
-    max-width: 300px; /* ✅ Ajuste dinámico del cuadro */
+    max-width: 300px;
+    /* ✅ Ajuste dinámico del cuadro */
     z-index: 90;
 }
 
@@ -262,7 +324,7 @@
 .chat-notification.show {
     opacity: 1;
     transform: translateY(0);
-    
+
 }
 
 /* 📌 Imagen del personaje */
@@ -279,8 +341,10 @@
     font-size: 1rem;
     font-weight: bold;
     max-width: 100%;
-    text-align: center; /* ✅ Centra el texto */
-    padding: 10px 14px; /* ✅ Espaciado interno */
+    text-align: center;
+    /* ✅ Centra el texto */
+    padding: 10px 14px;
+    /* ✅ Espaciado interno */
     word-wrap: break-word;
     white-space: normal;
     overflow-wrap: break-word;
@@ -308,7 +372,7 @@
 
 /* 📌 Personaje animado */
 .chatbot-character {
-    width: 100px;  
+    width: 100px;
     height: auto;
     background: none;
     display: block;
@@ -317,8 +381,13 @@
 
 /* 📌 Animación del personaje (ligero movimiento) */
 @keyframes moveCharacter {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-3px); }
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-3px);
+    }
 }
 
 /* 📌 Estilo del diálogo */
@@ -338,6 +407,7 @@
     font-style: italic;
     opacity: 0.6;
 }
+
 /* 📌 Contenedor del chat */
 #chat-box {
     display: flex;
@@ -355,31 +425,46 @@
     width: 100%;
 }
 
-/* 📌 Mensajes del usuario y del bot */
-.user, .bot {
-    max-width: 75%; /* ✅ Ajusta el tamaño del mensaje dinámicamente */
-    word-wrap: break-word; /* ✅ Evita que el texto se corte */
-    white-space: pre-wrap; /* ✅ Mantiene los saltos de línea */
-    padding: 12px 15px;
-    border-radius: 12px;
+.typing-indicator {
+    margin-right: auto;
+    background-color: #f1f1f1;
+    color: #444;
+    padding: 10px 16px;
+    border-radius: 18px 18px 18px 0;
+    max-width: 140px;
     font-size: 15px;
-    line-height: 1.5;
-    text-align: left;
-    display: inline-block;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: fadeIn 0.3s ease-in;
 }
 
-/* 📌 Mensajes del usuario */
-.user {
-    align-self: flex-end;
-    background: #00c8ff;
-    color: white;
-    text-align: right;
+.typing-indicator .dot {
+    width: 3px;
+    height: 3px;
+    background-color: #555;
+    border-radius: 50%;
+    animation: blink 1.3s infinite;
 }
 
-/* 📌 Mensajes del bot */
-.bot {
-    align-self: flex-start;
-    background: #03517a;
-    color: white;
-    text-align: left;
+.typing-indicator .dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-indicator .dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes blink {
+
+    0%,
+    80%,
+    100% {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
 }

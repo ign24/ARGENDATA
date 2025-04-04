@@ -1,0 +1,24 @@
+service: argendata-reports
+
+provider:
+  name: aws
+  runtime: python3.9
+  region: us-east-1
+  environment:
+    BUCKET_NAME: "argendata-reports"
+    OPENAI_API_KEY: ${ssm:/openai/api_key}
+
+functions:
+  generar_reporte:
+    handler: src.app.generar_reporte
+    events:
+      - http:
+          path: generar_reporte
+          method: post
+
+  health_check:
+    handler: src.app.health_check
+    events:
+      - http:
+          path: health
+          method: get

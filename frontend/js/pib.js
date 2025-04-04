@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
             let rows = csvText.split("\n").map(row => row.split(","));
             let labels = [], data = [];
 
-            // Extraer datos (suponiendo formato: Año,PIB)
             rows.slice(1).forEach(row => {
                 if (row.length >= 2) {
                     labels.push(row[0].trim());  // Año
@@ -13,38 +12,76 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
 
-            // Crear gráfico de barras verticales con Chart.js
-            const ctx = document.getElementById("pibChart").getContext("2d");
-            new Chart(ctx, {
-                type: "bar",
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: "PIB en Millones de USD",
-                        data: data,
-                        backgroundColor: "rgba(0, 200, 255, 0.6)", 
-                        borderColor: "#00c8ff",
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        x: {
-                            ticks: { color: "#ffffff" },
-                            grid: { color: "rgba(255, 255, 255, 0.2)" }
-                        },
-                        y: {
-                            ticks: { color: "#ffffff" },
-                            grid: { color: "rgba(255, 255, 255, 0.2)" }
-                        }
-                    },
-                    plugins: {
-                        legend: { display: false },
-                        title: { display: true, text: "Evolución del PIB", color: "#ffffff" }
+            const chartDom = document.getElementById("pibChart");
+            const pibChart = echarts.init(chartDom);
+
+            const option = {
+                title: {
+                    left: "center",
+                    textStyle: {
+                        color: "#ffffff",
+                        fontSize: 16
                     }
-                }
-            });
+                },
+                tooltip: {
+                    trigger: "axis",
+                    axisPointer: {
+                        type: "shadow"
+                    },
+                    formatter: function (params) {
+                        const item = params[0];
+                        return `${item.name}: ${item.value.toLocaleString()} M USD`;
+                    }
+                },
+                grid: {
+                    left: "8%",
+                    right: "4%",
+                    bottom: "8%",
+                    top: 60,
+                    containLabel: true
+                },
+                xAxis: {
+                    type: "category",
+                    data: labels,
+                    axisLabel: { color: "#ffffff" },
+                    axisLine: { lineStyle: { color: "#ffffff" } },
+                    splitLine: { show: false }
+                },
+                yAxis: {
+                    type: "value",
+                    axisLabel: {
+                        formatter: "{value}",
+                        color: "#ffffff"
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: "rgba(255,255,255,0.2)"
+                        }
+                    }
+                },
+                series: [{
+                    data: data,
+                    type: "bar",
+                    barWidth: "50%",
+                    itemStyle: {
+                        color: {
+                            type: "linear",
+                            x: 0, y: 0, x2: 0, y2: 1,
+                            colorStops: [
+                                { offset: 0, color: "#3FD0E8" },
+                                { offset: 1, color: "#03517a" }
+                            ]
+                        }
+                    }
+                }],
+                backgroundColor: "transparent"
+            };
+
+            pibChart.setOption(option);
+
+            // Integración con GridStack
+            registerChart(pibChart);
+            observeChartResize(pibChart);
         })
         .catch(error => console.error("Error al cargar PIB:", error));
 });

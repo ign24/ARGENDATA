@@ -16,6 +16,21 @@ async function enviarMensaje() {
     agregarMensaje("usuario", mensajeUsuario);
     document.getElementById("mensaje").value = "";
 
+    // 🔵 Mostrar animación "bot escribiendo..."
+    const chatBody = document.getElementById("chat-box");
+    const typingDiv = document.createElement("div");
+    typingDiv.className = "chat-message-container";
+    typingDiv.id = "typing-indicator";
+    typingDiv.innerHTML = `
+        <div class="typing-indicator">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    `;
+    chatBody.appendChild(typingDiv);
+    chatBody.scrollTop = chatBody.scrollHeight;
+
     try {
         const response = await fetch(API_URL, {
             method: "POST",
@@ -27,30 +42,62 @@ async function enviarMensaje() {
             throw new Error(`Error en la respuesta del servidor: ${response.status} ${response.statusText}`);
         }
 
-        const data = await response.json();
-        agregarMensaje("bot", data.response || "No se recibió respuesta.");
+        const mensajeIA = await response.text();
+
+        // 🟡 Remover animación typing
+        document.getElementById("typing-indicator")?.remove();
+
+        // 🟢 Mostrar mensaje con efecto typing
+        agregarMensaje("bot", mensajeIA || "No se recibió respuesta.");
     } catch (error) {
         console.error("Error al conectar con el backend:", error);
+        document.getElementById("typing-indicator")?.remove();
         agregarMensaje("bot", "Lo siento, hubo un problema al obtener la respuesta.");
     }
 }
 
+
 function agregarMensaje(tipo, mensaje) {
     const chatBody = document.getElementById("chat-box");
-
     if (!chatBody) {
         console.error("Elemento #chat-box no encontrado");
         return;
     }
 
+    const containerDiv = document.createElement("div");
+    containerDiv.className = "chat-message-container";
+
     const mensajeDiv = document.createElement("div");
-    mensajeDiv.className = tipo === 'usuario' ? 'user' : 'bot';
-    mensajeDiv.textContent = mensaje;
+    mensajeDiv.className = tipo === "usuario" ? "user" : "bot";
+    containerDiv.appendChild(mensajeDiv);
+    chatBody.appendChild(containerDiv);
 
-    chatBody.appendChild(mensajeDiv);
-    chatBody.scrollTop = chatBody.scrollHeight; // ✅ Auto-scroll al final para ver el mensaje completo
+    if (tipo === "bot") {
+        // ✅ Convertir Markdown a HTML
+        const htmlCompleto = marked.parse(mensaje);
+
+        // ✅ Animación tipo máquina de escribir (HTML-safe)
+        let index = 0;
+        let tempSpan = document.createElement("span");
+        mensajeDiv.appendChild(tempSpan);
+
+        function escribirHTML() {
+            if (index < htmlCompleto.length) {
+                tempSpan.innerHTML += htmlCompleto.charAt(index);
+                index++;
+                setTimeout(escribirHTML, 10); // velocidad de escritura
+            } else {
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }
+        }
+
+        escribirHTML();
+    } else {
+        // Usuario sin formato
+        mensajeDiv.textContent = mensaje;
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
 }
-
 
 // Alternar pantalla completa del chat
 function toggleFullScreen() {
@@ -148,7 +195,7 @@ function iniciarNotificacionChat() {
             escribir();
         }
 
-        
+
 
         function showChatNotification() {
             chatButton.classList.add("notify");

@@ -8,18 +8,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 const html = await response.text();
                 element.innerHTML = html;
 
-                console.log(`✅ ${file} cargado correctamente`);
-
-                // Esperar a que el header se inserte antes de aplicar la animación
+                // Esperar a que el header se inserte antes de aplicar efectos
                 setTimeout(() => {
                     const header = document.querySelector("header");
                     if (header) {
                         header.classList.add("animacion-reflejo");
-                        console.log("✨ Animación de reflejo aplicada al header");
                     }
-                }, 50); // Pequeño delay para asegurar que el DOM se actualizó
 
-                // Ejecutar el callback después de cargar el HTML
+                    aplicarEfectoVidrioEnHeaderYSidebar();
+                    inicializarTema();
+                    inicializarModoLite(); // ⬅️ Agregado
+
+                }, 50);
+
                 if (callback) callback();
             } catch (error) {
                 console.error(error);
@@ -34,31 +35,105 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.appendChild(script);
     }
 
-    // Cargar `dynamic_loader.html` y luego los scripts dependientes
-    loadComponent("dynamic-loader-container", "dynamic_loader.html", () => {
-        console.log("✅ dynamic_loader.html ha sido cargado");
+    function inicializarTema() {
+        const toggleBtn = document.getElementById("toggle-theme");
+        const themeIcon = document.getElementById("theme-icon");
 
-        // Asegurar que el sidebar funcione correctamente
-        const toggleBtn = document.getElementById("toggleBtn");
-        const sidebar = document.getElementById("sidebar");
+        if (!toggleBtn || !themeIcon) return;
 
-        if (toggleBtn && sidebar) {
-            toggleBtn.addEventListener("click", () => {
-                sidebar.classList.toggle("open");
-            });
+        const preferencia = localStorage.getItem("tema") || "oscuro";
+        const esClaro = preferencia === "claro";
+
+        if (esClaro) {
+            aplicarModoClaro(); // Estilo + partículas + tarjetas
+        } else {
+            aplicarModoOscuro();
+        }
+        toggleBtn.addEventListener("click", () => {
+            const modoEsClaro = document.body.classList.contains("modo-claro");
+
+            if (!modoEsClaro) {
+                animarTransicionAModoClaro(() => {
+                    aplicarModoClaro();
+                    localStorage.setItem("tema", "claro");
+                });
+            } else {
+                animarTransicionAModoOscuro(() => {
+                    aplicarModoOscuro();
+                    localStorage.setItem("tema", "oscuro");
+                });
+            }
+        });
+    }
+
+    // En loadComponent callback (ya lo tenés definido)
+    setTimeout(() => {
+        const header = document.querySelector("header");
+        if (header) {
+            header.classList.add("animacion-reflejo");
         }
 
-        // Cargar `sidebar.js`
-        cargarScript("js/sidebar.js", () => console.log("✅ sidebar.js ha sido cargado"));
+        aplicarEfectoVidrioEnHeaderYSidebar();
 
-        // Cargar `chat.js` y ejecutar la función de notificación
-        cargarScript("js/chat.js", () => {
-            console.log("✅ chat.js ha sido cargado");
-            if (typeof iniciarNotificacionChat === "function") {
-                iniciarNotificacionChat();
-            } else {
-                console.error("❌ La función iniciarNotificacionChat no está definida.");
+        // Animación del logo al cargar
+        const figura = document.getElementById("logo-figura");
+        if (figura) {
+            figura.style.transform = "rotate(0deg)";
+        }
+
+        inicializarTema();
+        inicializarModoLite();
+    }, 50);
+
+    // ✅ Inicializar modo lite
+    function inicializarModoLite() {
+        const animBtn = document.getElementById("toggle-animations-btn");
+        if (!animBtn) {
+            console.warn("⚠️ Botón de animaciones no encontrado.");
+            return;
+        }
+
+        let modoLite = localStorage.getItem("modoLite") === "true";
+
+        // Aplicar si estaba activado previamente
+        if (modoLite) {
+            document.body.classList.add("modo-lite");
+            animBtn.textContent = "Modo Lite: ON";
+        }
+
+        animBtn.addEventListener("click", () => {
+            modoLite = !modoLite;
+            document.body.classList.toggle("modo-lite", modoLite);
+            animBtn.textContent = `Modo Lite: ${modoLite ? "ON" : "OFF"}`;
+            localStorage.setItem("modoLite", modoLite);
+
+            // 🧨 Desactivar partículas
+            if (window.pJSDom && window.pJSDom.length > 0) {
+                const particles = window.pJSDom[0].pJS;
+                particles.particles.move.enable = !modoLite;
+                particles.fn.particlesEmpty();
+                if (!modoLite) particles.fn.particlesCreate();
             }
+        });
+    }
+
+    // ✅ Cargar todo
+    loadComponent("dynamic-loader-container", "dynamic_loader.html", () => {
+        const toggleBtn = document.getElementById("toggleBtn");
+        const sidebar = document.getElementById("sidebar");
+        const mainWrapper = document.getElementById("main-wrapper");
+
+        if (toggleBtn && sidebar && mainWrapper) {
+            toggleBtn.addEventListener("click", () => {
+                sidebar.classList.toggle("open");
+                mainWrapper.classList.toggle("with-sidebar");
+                window.dispatchEvent(new Event("resize"));
+            });
+        }
+        cargarScript("js/sidebar.js", () => console.log("✅ sidebar.js cargado"));
+        cargarScript("js/chat.js", () => {
+            console.log("✅ chat.js cargado");
+            if (typeof iniciarNotificacionChat === "function") iniciarNotificacionChat();
         });
     });
 });
