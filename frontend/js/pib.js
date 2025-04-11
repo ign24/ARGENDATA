@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 series: [{
                     data: data,
                     type: "bar",
-                    barWidth: "50%",
+                    barWidth: "70%",
                     itemStyle: {
                         color: {
                             type: "linear",

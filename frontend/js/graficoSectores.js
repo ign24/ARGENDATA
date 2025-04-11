@@ -16,8 +16,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Colores condicionales (rojo para negativos, celeste para positivos)
             const barColors = variaciones.map(val =>
-                val < 0 ? "#ff4d4d" : "#3FD0E8"
+                val < 0 ? "#E53935" : "lightgreen"
             );
+            
 
             const chartDom = document.getElementById("graficoCrecimiento");
             const crecimientoChart = echarts.init(chartDom);
@@ -73,7 +74,15 @@ document.addEventListener("DOMContentLoaded", function () {
                         value: val,
                         itemStyle: { color: barColors[i] }
                     })),
-                    barWidth: 10
+                    barWidth: '70%',
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowColor: "rgba(255, 255, 255, 0.3)",
+                            borderColor: "#ffffff",
+                            borderWidth: 1
+                        }
+                    }
                 }],
                 backgroundColor: "transparent",
                 animationDuration: 1200,

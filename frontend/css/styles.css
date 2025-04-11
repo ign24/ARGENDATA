@@ -132,7 +132,6 @@
 /* Ajuste del contenido principal para evitar que quede oculto */
 body {
     padding-top: 15px;
-    /* Ajuste para header (60px) + ticker (40px aprox.) */
 }
 
 @keyframes borderGlow {
@@ -172,13 +171,6 @@ header {
     animation: borderGlow 3s infinite ease-in-out;
 }
 
-/* 📌 Oculta la barra de búsqueda en móviles */
-@media (max-width: 640px) {
-    .hidden.sm\\:block {
-        display: none;
-    }
-}
-
 /* ------------------------------------📌 LOGO REDONDO CON HALO Y AURA ----------------------------------------------- */
 .logo-3d-glass {
     position: relative;
@@ -190,10 +182,10 @@ header {
     z-index: 10;
     overflow: hidden;
     will-change: transform;
-  }
-  
-  /* Glow/reflejo controlado */
-  .logo-3d-glass::after {
+}
+
+/* Glow/reflejo controlado */
+.logo-3d-glass::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -204,13 +196,11 @@ header {
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: 1;
-  }
-  
-  .logo-3d-glass:hover::after {
-    opacity: 1;
-  }
-  
+}
 
+.logo-3d-glass:hover::after {
+    opacity: 1;
+}
 
 /* ------------------------------------📌 BODY -----------------------------------------------*/
 
@@ -262,7 +252,6 @@ h6 {
     transition: transform 0.3s ease-in-out;
     transform: translateX(0);
     width: calc(100% - 50px);
-    padding-left: 30px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -272,17 +261,16 @@ h6 {
 #main-wrapper {
     transition: margin-left 0.3s ease-in-out;
     margin-left: 0;
-    width: calc(100% - 0px);
 }
 
 #main-wrapper.with-sidebar {
-    margin-left: 16rem;
+    margin-left: 15rem;
     /* mismo ancho que el sidebar */
     width: calc(100% - 16rem);
 }
 
 .container {
-    max-width: 1400px;
+    max-width: 1600px;
     margin: 0;
     padding: 0 1rem;
     display: block;
@@ -298,7 +286,7 @@ h6 {
 /* ------------------------------------📌 TÍTULO -----------------------------------------------*/
 .dashboard-title {
     font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: bold;
     text-align: left;
     background: linear-gradient(to right, #00c8ff, #3FD0E8, #03517a);
@@ -307,9 +295,7 @@ h6 {
     -webkit-text-fill-color: transparent;
     display: inline-block;
     margin-top: 1.2rem;
-    /* Ajuste menor de margen */
     letter-spacing: 1.5px;
-    /* Mejora la legibilidad */
     text-shadow: 2px 2px 10px rgba(0, 200, 255, 0.1);
     justify-content: flex-start;
 }
@@ -320,13 +306,11 @@ h6 {
 /* 📌 Sidebar con efecto vidrio */
 #sidebar {
     background: rgba(0, 0, 0, 0.288);
-    /* 🔥 Más transparencia */
     backdrop-filter: blur(15px);
-    /* 🔥 Más desenfoque */
     position: fixed;
     top: 60px;
     left: -16rem;
-    width: 16rem;
+    width: 14rem;
     height: calc(100vh - 60px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     z-index: 50;
@@ -354,6 +338,7 @@ h6 {
     transform: scale(1);
 }
 
+
 /* ------------------------------------📌 DASHBOARD -----------------------------------------------*/
 /* 🔹 Icono de dólar*/
 .icon {
@@ -363,29 +348,21 @@ h6 {
     /* Color celeste brillante */
 }
 
-#tarjetas-dolares {
-    display: flex;
-    flex-wrap: wrap;
-    /* Permite que las tarjetas se adapten al tamaño del contenedor */
-    gap: 10px;
-    align-items: stretch;
-    /* Asegura que todas las tarjetas tengan la misma altura */
-    margin-bottom: 16px;
-}
-
 .tarjeta-dolar {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    text-align: left;
     justify-content: flex-start;
-    padding: 0.5rem;
+    padding: 0.6rem;
     border-radius: 12px;
     backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     text-align: center;
     gap: 0.2rem;
-    min-width: 160px;
+    min-width: 150px;
+    width: auto;
     position: relative;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     transform: translateY(20px) scale(0.95)
@@ -395,7 +372,6 @@ h6 {
 .tarjeta-dolar::after {
     content: "";
     width: 6px;
-    /* Grosor de la barra */
     height: 98%;
     background: linear-gradient(to top, transparent, #00c8ff, transparent);
     position: absolute;
@@ -439,22 +415,18 @@ h6 {
     color: #ffffff;
 }
 
-/* 📌 Links y botones */
-a {
-    color: #00c8ff;
-    /* Cian brillante */
-    text-decoration: none;
-    transition: color 0.3s ease-in-out;
-}
-
 #tarjetas-dolares {
-    margin-top: 20px;
-    gap: 10px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: flex-start;
-    margin-bottom: 16px;
+    gap: 12px; /* mismo que el grid */
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem;
+    margin-top: 20px;
+    box-sizing: border-box;
 }
-
 a:hover {
     color: #3FD0E8;
 }
@@ -494,28 +466,21 @@ a:hover {
 .grid-stack {
     width: 100%;
     height: 100%;
-    gap: 10px;
-}
-
-.grid-stack .grid-stack-item {
-    margin-bottom: 24px !important;
-    /* Fuerza margen entre filas */
 }
 
 .grid-stack-item-content {
     width: 100%;
     height: 100%;
-    min-height: 800px;
-    /* o el valor que prefieras */
+    min-height: 1200px;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
     object-fit: contain;
     position: relative;
-    /* necesario para el ícono ::after */
 }
 
-/* 🔹 Indicador visual elegante con imagen (resizer) */
+
+/* 🔹 Indicador visual del resizer */
 .grid-stack-item-content::after {
     content: "";
     position: absolute;
@@ -548,20 +513,18 @@ a:hover {
     display: none !important;
 }
 
-/* 🔹 Handles de redimensionamiento hacia adentro (más elegantes) */
+/* 🔹 Handles de redimensionamiento */
 .grid-stack-item .ui-resizable-handle {
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     background: transparent;
     position: absolute;
     z-index: 10;
 }
 
 /* 🔹 Ajustes por dirección */
-
 .grid-stack-item .ui-resizable-e {
     right: 6px;
-    /* entra 6px desde el borde */
     top: 0;
     bottom: 0;
     cursor: ew-resize;
@@ -594,16 +557,15 @@ a:hover {
     /* encima de todo */
 }
 
-
 /* ------------------------------------📌DASHBOARD PERSONALIZABLE -----------------------------------------------*/
 
 /* 📌 Botón de Generar Reporte */
 .btn-reporte {
     position: absolute;
-    top: 15px;
-    right: 20px;
-    padding: 12px 18px;
-    margin-top: 100px;
+    top: 1px;
+    right: 10px;
+    padding: 15px;
+    margin-top: 15px;
     font-size: 1rem;
     font-weight: 500;
     border-radius: 8px;
@@ -615,6 +577,10 @@ a:hover {
     display: flex;
     align-items: center;
     gap: 8px;
+    width: fit-content;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+
 }
 
 .btn-reporte i {
@@ -635,6 +601,7 @@ a:hover {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    margin-bottom: 20px;
 }
 
 /* 📌 Tarjeta de Noticias */
@@ -648,7 +615,9 @@ a:hover {
     width: 100%;
     max-width: 300px;
     margin-top: 15px;
+    margin-bottom: 20px;
     text-align: center;
+    gap: 1rem
 }
 
 /* 📌 Lista de Noticias */
@@ -666,6 +635,7 @@ a:hover {
     border-radius: 6px;
     background: rgba(255, 255, 255, 0.1);
 }
+
 .tarjeta {
     display: flex;
     flex-direction: column;
@@ -679,12 +649,10 @@ a:hover {
     text-align: left;
     gap: 1rem;
     z-index: 5;
-
     width: 100%;
     height: 100%;
     min-width: 300px;
     min-height: 250px;
-
     transition: box-shadow 0.3s ease-in-out;
     box-sizing: border-box;
     overflow: hidden;
@@ -714,156 +682,9 @@ a:hover {
 }
 
 #salariosChart {
-    width: 100%;
-    height: 100%;
-    min-height: 250px;
-}
-
-
-#salariosChart {
     width: 100% !important;
-    height: auto !important;
-    max-height: 400px;
+    height: auto;
     text-align: center;
-}
-
-
-/*------------------------------- 📌 Commodities ------------------------------------*/
-/* 📌 Tarjeta de commodities con efecto metálico mejorado */
-.commodities-card {
-    position: fixed;
-    right: 20px;
-    /* 📌 Ubicación fija a la derecha */
-    top: 300px;
-    /* 📌 Se mantiene en su posición */
-    width: 300px;
-    height: 400px;
-    background: linear-gradient(to bottom right, #0000006c, #0a0e1870, #1e293b86);
-    backdrop-filter: blur(14px);
-    border-radius: 12px;
-    padding: 10px;
-    color: white;
-    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.08), 0 4px 8px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    z-index: 40;
-    /* 📌 Eleva la tarjeta por encima de los demás elementos */
-}
-
-/* 📌 Pseudo-elemento para el reflejo metálico ultra realista con movimiento */
-.commodities-card::after {
-    content: "";
-    position: absolute;
-    top: -150%;
-    left: -170%;
-    width: 250%;
-    height: 250%;
-    background: linear-gradient(135deg,
-            rgba(255, 255, 255, 0.507) 15%,
-            rgba(180, 220, 255, 0.24) 40%,
-            rgba(255, 255, 255, 0.1) 100%);
-    transform: rotate(45deg);
-    animation: var(--animation-trigger, metallicLoop 7s ease-in forwards);
-    pointer-events: none;
-    opacity: 0.2;
-    filter: blur(5px);
-}
-
-/* 📌 Animación del brillo con movimiento realista */
-@keyframes metallicLoop {
-    0% {
-        top: -150%;
-        left: -170%;
-        transform: rotate(45deg) scale(1);
-        opacity: 0;
-        filter: blur(10px);
-    }
-
-    20% {
-        opacity: 0.2;
-        filter: blur(8px);
-    }
-
-    50% {
-        top: 50%;
-        left: 50%;
-        transform: rotate(47deg) scale(1.02);
-        /* 🔹 Leve cambio en la rotación y escala */
-        opacity: 0.35;
-        filter: blur(5px);
-    }
-
-    80% {
-        opacity: 0.2;
-        filter: blur(8px);
-    }
-
-    100% {
-        top: 150%;
-        left: 170%;
-        transform: rotate(45deg) scale(1);
-        opacity: 0;
-        filter: blur(10px);
-    }
-}
-
-/* 📌 Título */
-.commodities-card h3 {
-    font-size: 0.9rem;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-/* 📌 Tabla compacta */
-.commodities-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.7rem;
-}
-
-/* 📌 Encabezados  */
-.commodities-table th {
-    background: rgba(255, 255, 255, 0.12);
-    padding: 4px;
-    font-size: 0.7rem;
-    text-align: left;
-}
-
-/* 📌 Celdas compactas */
-.commodities-table td {
-    padding: 4px;
-    font-size: 0.7rem;
-    text-align: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* 📌 Filas */
-.commodities-table tr {
-    height: 10px;
-}
-
-/* 📌 Colores de variación de precio */
-.commodities-table .positive {
-    color: #2ecc71;
-    font-weight: bold;
-}
-
-.commodities-table .negative {
-    color: #e74c3c;
-    font-weight: bold;
-}
-
-/* 📌 Ajustar tamaño solo para los gráficos de la tabla de commodities */
-.commodities-table canvas {
-    width: 20px;
-    /* Tamaño pequeño pero sin deformar */
-    height: 20px;
-    display: block;
-    margin: auto;
 }
 
 /*------------------------------- 📌 Modo claro ------------------------------------*/

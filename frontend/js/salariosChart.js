@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const rows = csvText.split("\n").slice(1).map(row => row.split(","));
             const meses = [];
             const privado = [], publico = [], noRegistrado = [], total = [];
-            
+
             rows.forEach(row => {
                 const [mes, p, pub, noReg, tot] = row.map(val => val?.trim());
                 if (mes) {
@@ -13,10 +13,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     privado.push(parseFloat(p) || null);
                     publico.push(parseFloat(pub) || null);
                     noRegistrado.push(parseFloat(noReg) || null);
-                    total.push(parseFloat(tot) || null); 
+                    total.push(parseFloat(tot) || null);
                 }
             });
             const chartDom = document.getElementById("salariosChart");
+            chartDom.style.width = "100%";
+            chartDom.style.height = "100%";
             const salariosChart = echarts.init(chartDom);
 
             const option = {
@@ -34,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 },
                 legend: {
-                    top: 40,
+                    top: 8,
                     textStyle: {
                         color: "#ffffff"
                     }
@@ -56,10 +58,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 yAxis: {
                     type: "value",
                     min: function (value) {
-                        return Math.floor(value.min * 0.50);
+                        return Math.floor(value.min * 0.8);
                     },
                     max: function (value) {
-                        return Math.ceil(value.max * 1.05);
+                        return Math.ceil(value.max * 1.15);
                     },
                     axisLabel: {
                         color: "#ffffff",
@@ -77,30 +79,55 @@ document.addEventListener("DOMContentLoaded", function () {
                         type: "line",
                         data: privado,
                         smooth: true,
-                        lineStyle: { color: "#00B2FF", width: 2 }
+                        symbol: "circle",
+                        symbolSize: 6,
+                        itemStyle: {
+                            color: "#00C8FF",
+                            borderColor: "#00C8FF"
+                        },
+                        lineStyle: { color: "#00C8FF", width: 2 }
                     },
                     {
                         name: "Sector Público",
                         type: "line",
                         data: publico,
                         smooth: true,
-                        lineStyle: { color: "#007ACC", width: 2 }
+                        symbol: "circle",
+                        symbolSize: 6,
+                        itemStyle: {
+                            color: "#FF9800",
+                            borderColor: "#FF9800"
+                        },
+                        lineStyle: { color: "#FF9800", width: 2 }
                     },
                     {
                         name: "Privado No Registrado",
                         type: "line",
                         data: noRegistrado,
                         smooth: true,
-                        lineStyle: { color: "#4C6EF5", width: 2 }
+                        symbol: "circle",
+                        symbolSize: 6,
+                        itemStyle: {
+                            color: "#FF5252",
+                            borderColor: "#FF5252"
+                        },
+                        lineStyle: { color: "#FF5252", width: 2 }
                     },
                     {
                         name: "Total Índice de Salarios",
                         type: "line",
                         data: total,
                         smooth: true,
-                        lineStyle: { color: "#A3AED0", width: 2 }
+                        symbol: "circle",
+                        symbolSize: 6,
+                        itemStyle: {
+                            color: "#00FFAB",
+                            borderColor: "#00FFAB"
+                        },
+                        lineStyle: { color: "#00FFAB", width: 2 }
                     }
-                ],
+                ]
+                ,
                 backgroundColor: "transparent"
             };
 

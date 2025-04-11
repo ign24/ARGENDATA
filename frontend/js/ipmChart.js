@@ -64,11 +64,34 @@ document.addEventListener("DOMContentLoaded", function () {
                     data: variaciones,
                     itemStyle: {
                         color: function (params) {
-                            const colors = ["#00B2FF", "#007ACC", "#4C6EF5"];
-                            return colors[params.dataIndex % colors.length];
-                        },
-                        borderColor: "#ffffff",
-                        borderWidth: 1
+                            const gradients = [
+                                {
+                                    type: 'linear',
+                                    x: 0, y: 0, x2: 0, y2: 1,
+                                    colorStops: [
+                                        { offset: 0, color: '#66D4FF' },  // claro celeste
+                                        { offset: 1, color: '#00B2FF' }   // azul base 1
+                                    ]
+                                },
+                                {
+                                    type: 'linear',
+                                    x: 0, y: 0, x2: 0, y2: 1,
+                                    colorStops: [
+                                        { offset: 0, color: '#66A8E0' },
+                                        { offset: 1, color: '#007ACC' }   // azul base 2
+                                    ]
+                                },
+                                {
+                                    type: 'linear',
+                                    x: 0, y: 0, x2: 0, y2: 1,
+                                    colorStops: [
+                                        { offset: 0, color: '#8FA3FF' },
+                                        { offset: 1, color: '#4C6EF5' }   // azul base 3
+                                    ]
+                                }
+                            ];
+                            return gradients[params.dataIndex % gradients.length];
+                        }
                     },
                     barWidth: "50%"
                 }],

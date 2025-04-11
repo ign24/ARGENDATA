@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     left: "center",
                     textStyle: {
                         color: "#ffffff",
-                        fontSize: 16
+                        fontSize: 15
                     }
                 },
                 tooltip: {
@@ -26,20 +26,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 },
                 grid: {
-                    left: "8%",
-                    right: "4%",
+                    left: "10%",   // más espacio para yLabels
+                    right: "6%",
                     bottom: "8%",
                     top: 60,
                     containLabel: true
                 },
                 xAxis: {
-                    type: "category",
-                    data: categorias,
-                    axisLabel: { color: "#ffffff" },
-                    axisLine: { lineStyle: { color: "#ffffff" } },
-                    splitLine: { show: false }
-                },
-                yAxis: {
                     type: "value",
                     axisLabel: {
                         color: "#ffffff",
@@ -51,13 +44,34 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
                     }
                 },
+                yAxis: {
+                    type: "category",
+                    data: categorias,
+                    axisLabel: {
+                        color: "#ffffff",
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: "#ffffff"
+                        }
+                    },
+                    splitLine: { show: false }
+                },
                 series: [{
                     name: "Variación Mensual",
                     type: "bar",
                     data: variacionMensual,
                     barWidth: "50%",
+                    barCategoryGap: "10%",
                     itemStyle: {
-                        color: "#00c8ff"
+                        color: {
+                            type: "linear",
+                            x: 0, y: 0, x2: 1, y2: 0,  // 🔁 horizontal
+                            colorStops: [
+                                { offset: 0, color: "#03517a" },
+                                { offset: 1, color: "#3FD0E8" }
+                            ]                            
+                        }
                     }
                 }],
                 backgroundColor: "transparent",

@@ -18,6 +18,8 @@
 
     <!-- Gridstack -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gridstack@10.3.1/dist/gridstack.min.css" />
+    <link rel="stylesheet" href="css/gridstack-gs-36.css">
+
 
     <!-- Particles -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
@@ -58,18 +60,14 @@
             <button id="generar-reporte-btn" class="btn-reporte">
                 <i class="fas fa-file-alt"></i> Generar Reporte
             </button>
-            <!-- 📌 Tarjeta de Noticias -->
-            <div id="tarjeta-noticias" class="tarjeta-noticias aparecer">
-                <h3 class="text-lg font-bold text-white mb-2">Últimas Noticias</h3>
-                <ul id="lista-noticias"></ul>
-            </div>
+
         </div>
 
         <!-- Contenido Principal -->
         <div class="container">
             <h1 class="dashboard-title">DASHBOARD</h1>
             <!-- 📊 Indicadores Económicos -->
-            <div class="py-6">
+            <div class="py-10">
                 <div class="flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="icon">
@@ -91,10 +89,11 @@
                     <h4>Indicadores Macroeconómicos</h4>
                 </div>
             </div>
-            <!-- 🧩 ZONA GridStack -->
+            <!-- 🧩 ZONA GridStack --> 
+              
             <div class="grid-stack">
                 <!-- Tarjeta IPC -->
-                <div class="grid-stack-item" gs-w="6" gs-h="3" gs-min-w="4" gs-max-w="12" gs-min-h="2" gs-max-h="4">
+                <div class="grid-stack-item" gs-w="8" gs-h="3" gs-min-w="6" gs-max-w="12" gs-min-h="3" gs-max-h="4">
                     <div class="grid-stack-item-content tarjeta">
                         <h3>Índice de Precios al Consumidor (IPC)</h3>
                         <p id="ipc-general"></p>
@@ -103,7 +102,7 @@
                 </div>
 
                 <!-- Tarjeta Deuda -->
-                <div class="grid-stack-item" gs-w="6" gs-h="3" gs-min-w="4" gs-max-w="12" gs-min-h="3" gs-max-h="6">
+                <div class="grid-stack-item" gs-w="3" gs-h="3" gs-min-w="4" gs-max-w="12" gs-min-h="3" gs-max-h="6">
                     <div class="grid-stack-item-content tarjeta">
                         <h3>Composición de la Deuda</h3>
                         <p id="totalDeuda" class="total-deuda-text"></p>
@@ -113,15 +112,15 @@
                 </div>
 
                 <!-- Tarjeta PIB -->
-                <div class="grid-stack-item" gs-w="6" gs-h="3" gs-min-w="4" gs-max-w="12" gs-min-h="3" gs-max-h="6">
+                <div class="grid-stack-item" gs-w="3" gs-h="3" gs-min-w="4" gs-max-w="12" gs-min-h="2" gs-max-h="6">
                     <div class="grid-stack-item-content tarjeta">
-                        <h3>Producto Interno Bruto (PIB) - Evolución</h3>
+                        <h3>Producto Interno Bruto (PIB)</h3>
                         <div id="pibChart" style="width:100%;height:100%;"></div>
                     </div>
                 </div>
 
                 <!-- Tarjeta EMAE -->
-                <div class="grid-stack-item" gs-w="6" gs-h="3" gs-min-w="4" gs-max-w="12" gs-min-h="3" gs-max-h="6">
+                <div class="grid-stack-item" gs-w="3" gs-h="3" gs-min-w="4" gs-max-w="12" gs-min-h="2" gs-max-h="6">
                     <div class="grid-stack-item-content tarjeta">
                         <h3>Estimador Mensual de Actividad Económica (EMAE)</h3>
                         <div id="emaeChart" style="width:100%;height:100%;"></div>
@@ -129,7 +128,7 @@
                 </div>
 
                 <!-- Tarjeta Crecimiento de Sectores -->
-                <div class="grid-stack-item" gs-w="6" gs-h="3" gs-min-w="4" gs-max-w="12" gs-min-h="3" gs-max-h="6">
+                <div class="grid-stack-item" gs-w="3" gs-h="3" gs-min-w="4" gs-max-w="12" gs-min-h="2" gs-max-h="6">
                     <div class="grid-stack-item-content tarjeta">
                         <h3>Crecimiento de Sectores Económicos</h3>
                         <div id="graficoCrecimiento" style="width:100%;height:100%;"></div>
@@ -137,7 +136,7 @@
                 </div>
 
                 <!-- Tarjeta Costos de Construcción -->
-                <div class="grid-stack-item" gs-w="6" gs-h="3" gs-min-w="4" gs-max-w="12" gs-min-h="3" gs-max-h="6">
+                <div class="grid-stack-item" gs-w="3" gs-h="3" gs-min-w="4" gs-max-w="12" gs-min-h="3" gs-max-h="6">
                     <div class="grid-stack-item-content tarjeta">
                         <h3>Variación de Costos de Construcción</h3>
                         <div id="iccChart" style="width:100%;height:100%;"></div>
@@ -145,7 +144,7 @@
                 </div>
 
                 <!-- Tarjeta Salarios -->
-                <div class="grid-stack-item" gs-w="6" gs-h="3" gs-min-w="4" gs-max-w="12" gs-min-h="3" gs-max-h="6">
+                <div class="grid-stack-item" gs-w="3" gs-h="3" gs-min-w="4" gs-max-w="12" gs-min-h="3" gs-max-h="6">
                     <div class="grid-stack-item-content tarjeta">
                         <h3>Variación Interanual del Índice de Salarios (2024)</h3>
                         <div id="salariosChart" style="width:100%;height:100%;"></div>
@@ -153,9 +152,9 @@
                 </div>
 
                 <!-- Tarjeta IPM -->
-                <div class="grid-stack-item" gs-w="6" gs-h="3" gs-min-w="4" gs-max-w="12" gs-min-h="3" gs-max-h="6">
+                <div class="grid-stack-item" gs-w="3" gs-h="3" gs-min-w="4" gs-max-w="12" gs-min-h="3" gs-max-h="6">
                     <div class="grid-stack-item-content tarjeta">
-                        <h3>Variación Interanual del Índice de Precios de la Manufactura (IPM) - 2025 [%]</h3>
+                        <h3>Índice de Precios de la Manufactura (IPM)</h3>
                         <div id="ipmChart" style="width:100%; height:100%;"></div>
                     </div>
                 </div>
@@ -166,11 +165,6 @@
     </div>
     <!-- 📌 Contenedor para la tabla de commodities -->
     <div id="commodities-container"></div>
-
-
-
-
-
 
 
     <!-- Scripts -->
@@ -214,8 +208,8 @@
                 const y = e.clientY - rect.top;
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
-                const rotateX = -(y - centerY) / 50;
-                const rotateY = (x - centerX) / 50;
+                const rotateX = -(y - centerY) / 100;
+                const rotateY = (x - centerX) / 100;
 
                 card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 

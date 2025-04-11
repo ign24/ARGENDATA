@@ -2,7 +2,6 @@
 window.activeCharts = [];
 
 /**
- * Registra una instancia de Chart (Chart.js o ECharts) para ser redimensionada automáticamente
  * @param {any} chart - instancia del gráfico
  */
 function registerChart(chart) {
@@ -59,11 +58,11 @@ function observeChartResize(chart) {
 // 👉 Inicialización de GridStack con mejoras visuales
 document.addEventListener("DOMContentLoaded", () => {
   const grid = GridStack.init({
-    cellHeight: 150,
-    margin: 3,
+    cellHeight: 140,
+    margin: 0,
     marginUnit: 'px',
-    float: false,
-    column: 42,
+    float: true,
+    column: 60,
     animate: true,
     disableOneColumnMode: false,
     resizable: {
