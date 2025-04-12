@@ -104,3 +104,5 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => console.error("Error al cargar los datos del IPM:", error));
 });
+if (!window.activeCharts) window.activeCharts = [];
+window.activeCharts.push(miGrafico);

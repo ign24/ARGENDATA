@@ -302,3 +302,36 @@ def generar_pdf_reporte(nombre_archivo: str, titulo: str, contenido: str) -> Pat
     except Exception as e:
         logger.error(f"Error al generar PDF: {str(e)}", exc_info=True)
         raise Exception(f"Error al generar PDF: {str(e)}")
+    
+
+
+# Función para convertir el texto a voz usando Amazon Polly
+def convertir_a_voz(texto: str):
+    polly = boto3.client('polly')
+
+    response = polly.synthesize_speech(
+        Text=texto,
+        OutputFormat='mp3',
+        VoiceId='Joanna'
+    )
+
+    # Guardar el audio en memoria (como archivo en bytes)
+    audio_stream = response['AudioStream']
+    audio_bytes = audio_stream.read()
+    return BytesIO(audio_bytes)  # Devuelves el archivo en memoria
+
+# Endpoint para generar el reporte en PDF y audio
+@app.post("/generar_reporte_audio")
+async def generar_reporte_audio():
+    try:
+        # Obtener el contenido del reporte (puede ser generado por otro proceso)
+        contenido_reporte = "Este es el contenido del reporte que deseas leer en voz alta."
+
+        # Convertir a voz
+        audio = convertir_a_voz(contenido_reporte)
+
+        # Devolver el archivo de audio en formato MP3
+        return FileResponse(audio, media_type="audio/mp3", filename="reporte_audio.mp3")
+
+    except Exception as e:
+        return {"error": str(e)}

@@ -1,22 +1,32 @@
 const API_URL = "http://127.0.0.1:8000/chat";
 
-// Evento para enviar el mensaje con "Enter"
-document.getElementById("mensaje").addEventListener("keypress", function (event) {
-    if (event.key === "Enter") {
-        event.preventDefault();
-        enviarMensaje();
-    }
+// Esto espera a que el DOM cargue y luego busca el input cuando ya existe
+document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(() => {
+        const inputMensaje = document.getElementById("mensaje");
+        if (inputMensaje) {
+            inputMensaje.addEventListener("keypress", function (event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    enviarMensaje();
+                }
+            });
+        } else {
+            console.warn("❌ No se encontró el input #mensaje al cargar chat.js");
+        }
+    }, 500); // Esperamos 0.5s para que dynamic_loader haya terminado
 });
 
-// Función para enviar el mensaje al backend
+// Función única para enviar el mensaje al backend y mostrar la respuesta del bot
 async function enviarMensaje() {
     let mensajeUsuario = document.getElementById("mensaje").value.trim();
     if (!mensajeUsuario) return;
 
+    // Mostrar mensaje del usuario
     agregarMensaje("usuario", mensajeUsuario);
     document.getElementById("mensaje").value = "";
 
-    // 🔵 Mostrar animación "bot escribiendo..."
+    // Mostrar animación "bot escribiendo..."
     const chatBody = document.getElementById("chat-box");
     const typingDiv = document.createElement("div");
     typingDiv.className = "chat-message-container";
@@ -29,7 +39,7 @@ async function enviarMensaje() {
         </div>
     `;
     chatBody.appendChild(typingDiv);
-    chatBody.scrollTop = chatBody.scrollHeight;
+    chatBody.scrollTop = chatBody.scrollHeight; // Desplazamiento hacia abajo
 
     try {
         const response = await fetch(API_URL, {
@@ -44,19 +54,27 @@ async function enviarMensaje() {
 
         const mensajeIA = await response.text();
 
-        // 🟡 Remover animación typing
+        // Eliminar animación "typing"
         document.getElementById("typing-indicator")?.remove();
 
-        // 🟢 Mostrar mensaje con efecto typing
+        // Mostrar el mensaje del bot con efecto de escritura
         agregarMensaje("bot", mensajeIA || "No se recibió respuesta.");
+        chatBody.scrollTop = chatBody.scrollHeight; // Desplazamiento hacia abajo al recibir respuesta
     } catch (error) {
         console.error("Error al conectar con el backend:", error);
         document.getElementById("typing-indicator")?.remove();
         agregarMensaje("bot", "Lo siento, hubo un problema al obtener la respuesta.");
+        chatBody.scrollTop = chatBody.scrollHeight; // Asegurar que se desplace hacia abajo en caso de error
     }
 }
 
+// Función para decodificar las entidades HTML
+function decodeHtmlEntities(text) {
+    const doc = new DOMParser().parseFromString(text, 'text/html');
+    return doc.body.textContent || doc.body.innerText;
+}
 
+// Función para agregar el mensaje al chat con animación de escritura
 function agregarMensaje(tipo, mensaje) {
     const chatBody = document.getElementById("chat-box");
     if (!chatBody) {
@@ -64,6 +82,10 @@ function agregarMensaje(tipo, mensaje) {
         return;
     }
 
+    // Eliminar las comillas (si las hay) del principio y final del mensaje
+    mensaje = mensaje.replace(/^"(.*)"$/, '$1'); // Elimina comillas alrededor del texto
+
+    // Crear el contenedor del mensaje
     const containerDiv = document.createElement("div");
     containerDiv.className = "chat-message-container";
 
@@ -73,31 +95,36 @@ function agregarMensaje(tipo, mensaje) {
     chatBody.appendChild(containerDiv);
 
     if (tipo === "bot") {
-        // ✅ Convertir Markdown a HTML
-        const htmlCompleto = marked.parse(mensaje);
+        // Limpiar caracteres escapados y formatear Markdown
+        const mensajeLimpio = mensaje
+            .replace(/\\n/g, '\n')
+            .replace(/\\"/g, '"')
+            .replace(/\\'/g, "'");
 
-        // ✅ Animación tipo máquina de escribir (HTML-safe)
+        const htmlCompleto = marked.parse(mensajeLimpio);
+        const htmlLimpio = decodeHtmlEntities(htmlCompleto); // Limpiar las entidades HTML
+
         let index = 0;
-        let tempSpan = document.createElement("span");
+        const tempSpan = document.createElement("span");
         mensajeDiv.appendChild(tempSpan);
 
         function escribirHTML() {
-            if (index < htmlCompleto.length) {
-                tempSpan.innerHTML += htmlCompleto.charAt(index);
+            if (index < htmlLimpio.length) {
+                tempSpan.innerHTML += htmlLimpio.charAt(index);
                 index++;
-                setTimeout(escribirHTML, 10); // velocidad de escritura
-            } else {
                 chatBody.scrollTop = chatBody.scrollHeight;
+                setTimeout(escribirHTML, 8); // Velocidad de escritura
             }
         }
 
         escribirHTML();
     } else {
-        // Usuario sin formato
         mensajeDiv.textContent = mensaje;
         chatBody.scrollTop = chatBody.scrollHeight;
     }
 }
+
+
 
 // Alternar pantalla completa del chat
 function toggleFullScreen() {
@@ -195,8 +222,6 @@ function iniciarNotificacionChat() {
             escribir();
         }
 
-
-
         function showChatNotification() {
             chatButton.classList.add("notify");
 
@@ -208,24 +233,23 @@ function iniciarNotificacionChat() {
                 notification.innerHTML = `
                     <span class="chat-text">...</span>
                     <img src="assets/asistente-de-inteligencia-artificial.gif" alt="Chatbot" class="chat-gif">
-                    
                 `;
                 document.body.appendChild(notification);
             }
 
             const chatTextElement = notification.querySelector(".chat-text");
 
-            // ✅ Borra el contenido anterior antes de iniciar la animación de escritura
+            // Borra el contenido anterior antes de iniciar la animación de escritura
             chatTextElement.innerHTML = "...";
             chatTextElement.classList.add("typing-effect");
 
             setTimeout(() => {
                 chatTextElement.classList.remove("typing-effect");
 
-                // ✅ Ahora sí muestra el nuevo mensaje de manera progresiva
+                // Ahora sí muestra el nuevo mensaje de manera progresiva
                 const newMessage = obtenerFraseAleatoria();
                 escribirTexto(chatTextElement, newMessage, 40);
-            }, 2000); // ✅ Espera 2 segundos antes de empezar a escribir
+            }, 2000); // Espera 2 segundos antes de empezar a escribir
 
             notification.classList.add("show");
 
@@ -263,35 +287,8 @@ const frasesChatbot = [
     "Mi única constante: más datos.",
     "No sé, pero lo argumento bien.",
     "El margen de error me respalda.",
-    "Un buen informe tapa todo."
+    "Un buen informe tapa todo.",
 ];
 
 
 let ultimaFrase = "";
-function agregarMensaje(tipo, mensaje) {
-    const chatBody = document.getElementById("chat-box");
-
-    if (!chatBody) {
-        console.error("Elemento #chat-box no encontrado");
-        return;
-    }
-
-    // ✅ Crear un contenedor para el mensaje
-    const containerDiv = document.createElement("div");
-    containerDiv.className = "chat-message-container";
-
-    const mensajeDiv = document.createElement("div");
-    mensajeDiv.className = tipo === "usuario" ? "user" : "bot";
-
-    // ✅ Agregar el texto correctamente
-    mensajeDiv.innerText = mensaje;
-
-    containerDiv.appendChild(mensajeDiv);
-    chatBody.appendChild(containerDiv);
-
-    // ✅ Auto-scroll al último mensaje
-    chatBody.scrollTop = chatBody.scrollWidth;
-}
-
-// Iniciar la función cuando se cargue la página
-document.addEventListener("DOMContentLoaded", iniciarNotificacionChat);

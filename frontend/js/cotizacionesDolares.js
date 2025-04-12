@@ -58,3 +58,5 @@ async function fetchDolares() {
         contenedorDolares.innerHTML = `<p class="text-center text-red-500">No se pudieron cargar los datos.</p>`;
     }
 }
+if (!window.activeCharts) window.activeCharts = [];
+window.activeCharts.push(miGrafico);

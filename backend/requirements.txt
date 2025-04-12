@@ -4,3 +4,7 @@ openai
 numpy
 mangum
 google-generativeai
+dotenv
+fpdf
+pandas
+boto3

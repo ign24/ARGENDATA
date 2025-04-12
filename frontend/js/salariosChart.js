@@ -141,3 +141,5 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => console.error("Error al cargar los datos de salarios:", error));
 });
+if (!window.activeCharts) window.activeCharts = [];
+window.activeCharts.push(miGrafico);

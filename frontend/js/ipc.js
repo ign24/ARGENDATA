@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     left: 'center',
                     textStyle: {
                         color: '#ffffff',
-                        fontSize: 16
+                        fontSize: 14
                     }
                 },
                 tooltip: {
@@ -91,3 +91,5 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => console.error("Error al cargar el IPC:", error));
 });
+if (!window.activeCharts) window.activeCharts = [];
+window.activeCharts.push(miGrafico);

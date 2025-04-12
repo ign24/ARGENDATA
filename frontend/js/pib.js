@@ -85,3 +85,5 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => console.error("Error al cargar PIB:", error));
 });
+if (!window.activeCharts) window.activeCharts = [];
+window.activeCharts.push(miGrafico);

@@ -87,3 +87,5 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => console.error("Error al cargar la serie temporal EMAE:", error));
 });
+if (!window.activeCharts) window.activeCharts = [];
+window.activeCharts.push(miGrafico);
