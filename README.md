@@ -1,3 +1,14 @@
+# ARGENDATA - Dashboard Económico Inteligente
+
+ARGENDATA es un tablero interactivo para visualizar indicadores clave de la economía argentina. 
+Permite explorar datos como inflación, PIB, deuda, salarios y más, con funcionalidades avanzadas como:
+- Generación automática de reportes en PDF usando IA
+- Chatbot económico basado en modelos LLM
+- Modo claro, oscuro y modo lite sin animaciones
+- Visualización de datos en tiempo real
+
+---
+
 # Cómo ejecutar el proyecto localmente
 
 Este proyecto se ejecuta completamente de forma local. Para que funcione correctamente, necesitás configurar tus claves de API.
@@ -43,4 +54,4 @@ cd frontend
 five-server .
 ```
 
-O abrí directamente el archivo `index.html` con la extensión **Live Server** de VSCode o Cursor.
+O abrí directamente el archivo `index.html` con la extensión **Live Server** de VSCode.
