@@ -15,10 +15,10 @@ Este proyecto se ejecuta completamente de forma local. Para que funcione correct
 
 ---
 
-## Requisitos
+## Requisitos para probar el backend
 
-- Una clave de API de **Gemini** (Google Generative AI)
-- (Opcional) Clave de **Amazon Polly** si querés habilitar la lectura en voz alta del reporte
+- Una clave de API de **OPENAI** o **Gemini**
+
 
 Crea un archivo `.env` a partir del ejemplo:
 
